@@ -55,7 +55,7 @@ const Login = ({ navigation }: LoginProps) => {
         <View style={(styles.containerStyle, styles.title)}>
           <Text style={styles.titleText}>Login</Text>
         </View>
-        <StatusLines steps={1} active={false} />
+        <StatusLines steps={1} />
         <View style={[styles.containerStyle, styles.content]}>
           <CustomInput
             placeholder="Email"

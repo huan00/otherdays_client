@@ -40,7 +40,7 @@ const Home = ({ navigation }: HomeProps) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <StatusLines steps={4} active={true} />
+        <StatusLines steps={4} activeStep={0} />
         <View style={styles.content}>
           <Text style={styles.headline}>
             A lifestyle commitment to ourselves. Powered by Ai, built for

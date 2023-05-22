@@ -14,16 +14,22 @@ import { STATUSLINE_COLOR, TEXT_COLOR } from '../constants/colors'
 type InputProps = {
   label?: string
   placeholder: string
+  placeholderColor?: string
   value: string
   password?: boolean | false
   onChange: (text: string) => void
+  keyboardType?: any
+  inputStyle?: object
 }
 
 const CustomInput = ({
   label,
   placeholder,
+  placeholderColor,
   value,
   password,
+  keyboardType,
+  inputStyle,
   onChange
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(true)
@@ -37,8 +43,11 @@ const CustomInput = ({
       <Text>{label}</Text>
       <View style={styles.inputWrapper}>
         <TextInput
-          style={styles.input}
-          placeholderTextColor={STATUSLINE_COLOR}
+          style={[styles.input, inputStyle]}
+          keyboardType={keyboardType}
+          placeholderTextColor={
+            placeholderColor ? placeholderColor : STATUSLINE_COLOR
+          }
           placeholder={placeholder}
           value={value}
           onChangeText={onChange}
@@ -64,6 +73,7 @@ export default CustomInput
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     borderBottomWidth: RFPercentage(0.1),
     borderColor: STATUSLINE_COLOR
   },

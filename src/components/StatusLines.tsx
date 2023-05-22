@@ -8,10 +8,10 @@ const HEIGHT = Dimensions.get('window').height
 
 type StatusProps = {
   steps: number
-  active: boolean
+  activeStep?: number
 }
 
-const StatusLines = ({ steps, active }: StatusProps) => {
+const StatusLines = ({ steps, activeStep }: StatusProps) => {
   return (
     <View style={styles.container}>
       {Array.apply(null, Array(steps)).map((_, idx) => (
@@ -19,7 +19,10 @@ const StatusLines = ({ steps, active }: StatusProps) => {
           style={[
             styles.line,
             { width: steps > 1 ? WIDTH / (steps + 1) : '100%' },
-            { backgroundColor: active ? STATUSLINE_COLOR : INACTIVE_COLOR }
+            {
+              backgroundColor:
+                activeStep === idx ? STATUSLINE_COLOR : INACTIVE_COLOR
+            }
           ]}
           key={idx}
         />

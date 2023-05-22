@@ -8,15 +8,17 @@ import {
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import React from 'react'
 import { TEXT_COLOR, OTHERDAY_LIME } from '../constants/colors'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 type CustomProps = {
-  title: string
+  title?: string
   bgColor?: string
   textColor?: string
   btnStyle?: object
+  icon?: JSX.Element
   onPress: () => void
 }
 
@@ -25,6 +27,7 @@ const CustomBtn = ({
   bgColor,
   textColor,
   btnStyle,
+  icon,
   onPress
 }: CustomProps) => {
   return (
@@ -36,8 +39,12 @@ const CustomBtn = ({
         btnStyle
       ]}
     >
-      <View>
-        <Text style={[styles.title, { color: textColor }]}>{title}</Text>
+      <View style={styles.titleWrapper}>
+        {title ? (
+          <Text style={[styles.title, { color: textColor }]}>{title}</Text>
+        ) : (
+          <>{icon}</>
+        )}
       </View>
     </TouchableOpacity>
   )
@@ -55,8 +62,11 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center'
   },
+  titleWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   title: {
-    alignSelf: 'center',
     fontSize: RFPercentage(1.5),
     lineHeight: RFPercentage(1.8),
     fontStyle: 'normal',

@@ -1,20 +1,38 @@
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  DeviceEventEmitter
+} from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-
-import React from 'react'
-import { NavigationProp, ParamListBase } from '@react-navigation/native'
+import React, { useState } from 'react'
 import CustomBtn from '../../components/CustomBtn'
 import {
   BACKGROUND_COLOR,
   OTHERDAY_LIME,
   TEXT_COLOR
 } from '../../constants/colors'
+import { RootStackParamList } from 'NavType'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-type OnboardProps = {
-  navigation: NavigationProp<ParamListBase>
+type OnboardProps = NativeStackScreenProps<RootStackParamList, 'OnboardOne'>
+
+type userData = {
+  firstName: string
+  lastName: string
+  gender: string
+  weight: number
+  height: number
 }
 
 const OnboardOne = ({ navigation }: OnboardProps) => {
+  // const [userData, setUserData] = useState<userData>()
+
+  // DeviceEventEmitter.addListener('event.userInfo', (eventData) => {
+  //   setUserData({ ...userData, ...eventData })
+  // })
+
   const handleNext = () => {
     navigation.navigate('OnboardTwo')
   }

@@ -1,23 +1,31 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './src/screens/Home'
 import Login from './src/screens/Login'
-import { OnboardOne, OnboardTwo } from './src/screens/onboarding'
+import {
+  OnboardOne,
+  OnboardThree,
+  OnboardFour,
+  OnboardTwo
+} from './src/screens/onboarding'
+import { RootStackParamList } from 'NavType'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-const Stack = createNativeStackNavigator()
+const RootStack = createNativeStackNavigator<RootStackParamList>()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={({ route, navigation }) => ({ headerShown: false })}
+      <RootStack.Navigator
+        screenOptions={{ headerShown: false }}
         initialRouteName="Home"
       >
-        <Stack.Screen name="Home" component={Home} options={{}} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="OnboardOne" component={OnboardOne} />
-        <Stack.Screen name="OnboardTwo" component={OnboardTwo} />
-      </Stack.Navigator>
+        <RootStack.Screen name="Home" component={Home} options={{}} />
+        <RootStack.Screen name="Login" component={Login} />
+        <RootStack.Screen name="OnboardOne" component={OnboardOne} />
+        <RootStack.Screen name="OnboardTwo" component={OnboardTwo} />
+        <RootStack.Screen name="OnboardThree" component={OnboardThree} />
+        <RootStack.Screen name="OnboardFour" component={OnboardFour} />
+      </RootStack.Navigator>
     </NavigationContainer>
   )
 }
