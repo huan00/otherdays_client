@@ -20,11 +20,6 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native'
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
-type RootStackParamList = {
-  Home: undefined
-  Login: undefined
-}
-
 type HomeProps = {
   navigation: NavigationProp<ParamListBase>
 }
@@ -52,7 +47,10 @@ const Home = ({ navigation }: HomeProps) => {
               bgColor={OTHERDAY_LIME}
               onPress={handleBtnPress}
             />
-            <TouchableOpacity onPress={handleRegister}>
+            <TouchableOpacity
+              onPress={handleRegister}
+              style={styles.registerWrapper}
+            >
               <Text style={styles.register}>I’m new to Other Days</Text>
             </TouchableOpacity>
           </View>
@@ -66,8 +64,8 @@ export default Home
 
 const styles = StyleSheet.create({
   container: {
-    width: WIDTH,
-    height: HEIGHT,
+    width: '100%',
+    height: '100%',
     backgroundColor: BACKGROUND_COLOR,
     justifyContent: 'space-between',
     paddingHorizontal: RFPercentage(1)
@@ -86,9 +84,13 @@ const styles = StyleSheet.create({
   loginRegisterContainer: {
     justifyContent: 'space-between'
   },
+  registerWrapper: {
+    alignSelf: 'center',
+    marginTop: RFPercentage(4),
+    paddingVertical: RFPercentage(1)
+  },
   register: {
     color: TEXT_COLOR,
-    alignSelf: 'center',
-    marginTop: RFPercentage(4)
+    alignSelf: 'center'
   }
 })

@@ -4,15 +4,32 @@ declare module 'NavType' {
     Login
     OnboardOne
     OnboardTwo
-    OnboardThree: { name: { firstName: string; lastName: string } }
+    OnboardThree: { name: { first_name: string; last_name: string } }
     OnboardFour: {
       userInfo: {
-        firstName: string
-        lastName: string
-        gender: string
+        first_name: string
+        last_name: string
+        age: number
+        sex: string
         weight: number
         height: { feet: number; inches: number }
       }
     }
+    OnboardFive: {
+      userInfo: {
+        first_name: string
+        last_name: string
+        age: number
+        sex: string
+        weight: number
+        height: { feet: number; inches: number }
+        profile_image: string
+      }
+    }
   }
+}
+
+declare module '*.png' {
+  const value: any
+  export = value
 }

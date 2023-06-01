@@ -18,6 +18,7 @@ type InputProps = {
   value: string
   password?: boolean | false
   onChange: (text: string) => void
+  onBlur?: () => void
   keyboardType?: any
   inputStyle?: object
 }
@@ -30,7 +31,8 @@ const CustomInput = ({
   password,
   keyboardType,
   inputStyle,
-  onChange
+  onChange,
+  onBlur
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(true)
 
@@ -53,6 +55,7 @@ const CustomInput = ({
           onChangeText={onChange}
           secureTextEntry={password ? showPassword : false}
           autoCapitalize="none"
+          onBlur={onBlur}
         />
         {password && (
           <TouchableOpacity onPress={handleOnPress}>

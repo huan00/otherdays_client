@@ -40,11 +40,10 @@ const CustomBtn = ({
       ]}
     >
       <View style={styles.titleWrapper}>
-        {title ? (
+        {title && (
           <Text style={[styles.title, { color: textColor }]}>{title}</Text>
-        ) : (
-          <>{icon}</>
         )}
+        {icon && <>{icon}</>}
       </View>
     </TouchableOpacity>
   )
@@ -63,6 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   titleWrapper: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },

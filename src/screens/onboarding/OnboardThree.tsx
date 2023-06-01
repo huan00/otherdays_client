@@ -1,4 +1,10 @@
-import { SafeAreaView, StyleSheet, Text, View, Keyboard } from 'react-native'
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Keyboard,
+  Platform
+} from 'react-native'
 import React, { useState } from 'react'
 import StatusLines from '../../components/StatusLines'
 import {
@@ -17,6 +23,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useKeyboard } from '@react-native-community/hooks'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from 'NavType'
+import OnboardHeading from '../../components/OnboardHeading'
 
 type OnboardThreeProps = NativeStackScreenProps<
   RootStackParamList,
@@ -55,15 +62,17 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
     }
 
     const userInfo: {
-      firstName: string
-      lastName: string
-      gender: string
+      first_name: string
+      last_name: string
+      age: number
+      sex: string
       weight: number
       height: { feet: number; inches: number }
     } = {
-      firstName: route.params.name.firstName,
-      lastName: route.params.name.lastName,
-      gender: gender,
+      first_name: route.params.name.first_name,
+      last_name: route.params.name.last_name,
+      age: parseInt(age),
+      sex: gender,
       weight: parseFloat(weight),
       height: { feet: parseInt(feet), inches: parseInt(inches) }
     }
@@ -75,11 +84,7 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusLines steps={5} activeStep={1} />
-      <View style={styles.headingWrapper}>
-        <Text style={styles.headingText}>
-          Let me know some of your current stats
-        </Text>
-      </View>
+      <OnboardHeading title="Let me know some of your current stats" />
       <Divider />
       <View style={styles.content}>
         <View style={styles.genderWrapper}>
@@ -167,22 +172,24 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
       <View
         style={[
           styles.nextBtn,
-          isKeyboardVisible
-            ? { bottom: keyboardHeight.keyboardHeight + RFPercentage(1) }
+          isKeyboardVisible && Platform.OS === 'ios'
+            ? { bottom: keyboardHeight.keyboardHeight + RFPercentage(5) }
             : { bottom: RFPercentage(6) }
         ]}
       >
-        <CustomBtn
-          icon={
-            <FontAwesomeIcon
-              icon={faArrowRight}
-              size={RFPercentage(3)}
-              style={styles.fontArrow}
-            />
-          }
-          onPress={handleNextPress}
-          btnStyle={{ width: RFPercentage(7) }}
-        />
+        {gender && weight && age && feet && inches && (
+          <CustomBtn
+            icon={
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                size={RFPercentage(3)}
+                style={styles.fontArrow}
+              />
+            }
+            onPress={handleNextPress}
+            btnStyle={{ width: RFPercentage(7) }}
+          />
+        )}
       </View>
     </SafeAreaView>
   )
@@ -194,14 +201,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: BACKGROUND_COLOR,
     height: '100%'
-  },
-  headingWrapper: {
-    paddingHorizontal: RFPercentage(1),
-    marginVertical: RFPercentage(2)
-  },
-  headingText: {
-    color: TEXT_COLOR,
-    fontSize: RFPercentage(4)
   },
   content: {
     marginTop: RFPercentage(5),

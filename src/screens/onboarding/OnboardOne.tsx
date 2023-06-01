@@ -18,21 +18,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 type OnboardProps = NativeStackScreenProps<RootStackParamList, 'OnboardOne'>
 
-type userData = {
-  firstName: string
-  lastName: string
-  gender: string
-  weight: number
-  height: number
-}
-
 const OnboardOne = ({ navigation }: OnboardProps) => {
-  // const [userData, setUserData] = useState<userData>()
-
-  // DeviceEventEmitter.addListener('event.userInfo', (eventData) => {
-  //   setUserData({ ...userData, ...eventData })
-  // })
-
   const handleNext = () => {
     navigation.navigate('OnboardTwo')
   }
@@ -54,7 +40,7 @@ const OnboardOne = ({ navigation }: OnboardProps) => {
             </View>
           </View>
         </View>
-        <View>
+        <View style={styles.nextBtn}>
           <CustomBtn title="Let's go" onPress={handleNext} />
         </View>
       </View>
@@ -97,5 +83,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#282828',
     borderRadius: 10,
     overflow: 'hidden'
+  },
+  nextBtn: {
+    marginBottom: RFPercentage(6)
   }
 })
