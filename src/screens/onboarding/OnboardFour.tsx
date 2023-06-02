@@ -25,6 +25,7 @@ import { Camera, CameraType } from 'expo-camera'
 import { RootStackParamList } from 'NavType'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import OnboardHeading from '../../components/OnboardHeading'
+import { SIGNUP_STEPS } from '../../constants/workoutProgram'
 
 type OnboardFourProps = NativeStackScreenProps<
   RootStackParamList,
@@ -80,18 +81,18 @@ const OnboardFour = ({ navigation, route }: OnboardFourProps) => {
     setImage(uri)
   }
 
-  const pressRegister = () => {
+  const handleNextPress = () => {
     if (!image) return
-    const { userInfo } = route.params
+    const userInfo = route.params
 
-    navigation.navigate('OnboardFive', {
-      userInfo: { ...userInfo, profile_image: image }
-    })
+    const data = { ...userInfo, profile_image: image }
+
+    navigation.navigate('OnboardFive', data)
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusLines steps={5} activeStep={3} />
+      <StatusLines steps={SIGNUP_STEPS} activeStep={3} />
 
       <OnboardHeading
         title="
@@ -140,7 +141,7 @@ const OnboardFour = ({ navigation, route }: OnboardFourProps) => {
           <CustomBtn
             title="Next"
             icon={<FontAwesomeIcon icon={faArrowRight} />}
-            onPress={pressRegister}
+            onPress={handleNextPress}
           />
         </View>
       )}

@@ -24,6 +24,7 @@ import { useKeyboard } from '@react-native-community/hooks'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from 'NavType'
 import OnboardHeading from '../../components/OnboardHeading'
+import { SIGNUP_STEPS } from '../../constants/workoutProgram'
 
 type OnboardThreeProps = NativeStackScreenProps<
   RootStackParamList,
@@ -64,26 +65,30 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
     const userInfo: {
       first_name: string
       last_name: string
+      email: string
+      password: string
       age: number
-      sex: string
+      gender: string
       weight: number
       height: { feet: number; inches: number }
     } = {
-      first_name: route.params.name.first_name,
-      last_name: route.params.name.last_name,
+      first_name: route.params.first_name,
+      last_name: route.params.last_name,
+      email: route.params.email,
+      password: route.params.password,
       age: parseInt(age),
-      sex: gender,
+      gender: gender,
       weight: parseFloat(weight),
       height: { feet: parseInt(feet), inches: parseInt(inches) }
     }
     // DeviceEventEmitter.emit('event.userInfo', data)
 
-    navigation.navigate('OnboardFour', { userInfo })
+    navigation.navigate('OnboardFour', userInfo)
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusLines steps={5} activeStep={1} />
+      <StatusLines steps={SIGNUP_STEPS} activeStep={1} />
       <OnboardHeading title="Let me know some of your current stats" />
       <Divider />
       <View style={styles.content}>

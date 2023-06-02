@@ -6,5 +6,6 @@ export const STYLES = StyleSheet.create({
   container: {
     backgroundColor: BACKGROUND_COLOR,
     height: '100%'
-  }
+  },
+  inputText: {}
 })

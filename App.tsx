@@ -6,7 +6,9 @@ import {
   OnboardThree,
   OnboardFour,
   OnboardTwo,
-  OnboardFive
+  OnboardFive,
+  OnboardSix,
+  OnboardSeven
 } from './src/screens/onboarding'
 import { RootStackParamList } from 'NavType'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -27,6 +29,8 @@ export default function App() {
         <RootStack.Screen name="OnboardThree" component={OnboardThree} />
         <RootStack.Screen name="OnboardFour" component={OnboardFour} />
         <RootStack.Screen name="OnboardFive" component={OnboardFive} />
+        <RootStack.Screen name="OnboardSix" component={OnboardSix} />
+        <RootStack.Screen name="OnboardSeven" component={OnboardSeven} />
       </RootStack.Navigator>
     </NavigationContainer>
   )

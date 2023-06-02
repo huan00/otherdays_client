@@ -23,8 +23,16 @@ import { useKeyboard } from '@react-native-community/hooks'
 import { RootStackParamList } from 'NavType'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import OnboardHeading from '../../components/OnboardHeading'
+import { SIGNUP_STEPS } from '../../constants/workoutProgram'
 
 type OnboardTwoProps = NativeStackScreenProps<RootStackParamList, 'OnboardTwo'>
+
+type data = {
+  first_name: string
+  last_name: string
+  email: string
+  password: string
+}
 
 const OnboardTwo = ({ navigation }: OnboardTwoProps) => {
   const [errorColor, setErrorColor] = useState<string>('')
@@ -32,6 +40,13 @@ const OnboardTwo = ({ navigation }: OnboardTwoProps) => {
     first_name: '',
     last_name: ''
   })
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i
+  const [email, setEmail] = useState<string>()
+  const [password, setPassword] = useState<string>()
+  const [confirmPassword, setConfirmPassword] = useState<string>()
+  const isEmail = (email: string) => {
+    return emailRegex.test(email)
+  }
   const isKeyboardVisible = Keyboard.isVisible()
   const keyboardHeight = useKeyboard()
 
@@ -42,28 +57,69 @@ const OnboardTwo = ({ navigation }: OnboardTwoProps) => {
     } else {
       setErrorColor('')
     }
-    navigation.navigate('OnboardThree', { name })
+    if (!email || !password || !confirmPassword || password != confirmPassword)
+      return
+
+    const data: data = {
+      first_name: name.first_name,
+      last_name: name.last_name,
+      email,
+      password
+    }
+    navigation.navigate('OnboardThree', data)
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusLines steps={5} activeStep={0} />
+      <StatusLines steps={SIGNUP_STEPS} activeStep={0} />
       <OnboardHeading title={'First things first, what should I call you'} />
       <Divider />
-      <View>
+      <View style={styles.nameWrapper}>
+        <View style={{ width: '50%' }}>
+          <CustomInput
+            placeholder="First Name"
+            onChange={(text) => setName({ ...name, first_name: text })}
+            placeholderColor={errorColor ? errorColor : ''}
+            value={name.first_name}
+          />
+        </View>
+        <View style={{ width: '50%' }}>
+          <CustomInput
+            placeholder="Last Name"
+            onChange={(text) => setName({ ...name, last_name: text })}
+            placeholderColor={errorColor ? errorColor : ''}
+            value={name.last_name}
+          />
+        </View>
+      </View>
+      <View style={styles.credential}>
         <CustomInput
-          placeholder="First Name"
-          onChange={(text) => setName({ ...name, first_name: text })}
-          placeholderColor={errorColor ? errorColor : ''}
-          value={name.first_name}
-          inputStyle={{ fontSize: RFPercentage(3) }}
+          placeholder="Email"
+          value={email ? email : ''}
+          onChange={setEmail}
+          inputStyle={email && isEmail(email) ? {} : { color: ERROR_COLOR }}
         />
         <CustomInput
-          placeholder="Last Name"
-          onChange={(text) => setName({ ...name, last_name: text })}
-          placeholderColor={errorColor ? errorColor : ''}
-          value={name.last_name}
-          inputStyle={{ fontSize: RFPercentage(3) }}
+          placeholder="Password"
+          password={true}
+          value={password ? password : ''}
+          onChange={setPassword}
+          inputStyle={
+            password && confirmPassword && password != confirmPassword
+              ? { color: ERROR_COLOR }
+              : {}
+          }
+        />
+        <CustomInput
+          placeholder="Confirm Password"
+          password={true}
+          value={confirmPassword ? confirmPassword : ''}
+          onChange={setConfirmPassword}
+          inputStyle={
+            password && confirmPassword && password != confirmPassword
+              ? { color: ERROR_COLOR }
+              : {}
+          }
         />
       </View>
       <View
@@ -98,6 +154,14 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: BACKGROUND_COLOR,
     height: '100%'
+  },
+  nameWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: RFPercentage(2)
+  },
+  credential: {
+    marginTop: RFPercentage(4)
   },
   nextBtn: {
     position: 'absolute',
