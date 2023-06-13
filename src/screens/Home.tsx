@@ -64,7 +64,7 @@ export default Home
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: WIDTH,
     height: '100%',
     backgroundColor: BACKGROUND_COLOR,
     justifyContent: 'space-between',

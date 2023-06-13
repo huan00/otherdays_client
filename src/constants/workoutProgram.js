@@ -22,3 +22,11 @@ export const EQUIPMENTS = [
   'TRX strps',
   'jump rope'
 ]
+
+export const WORKOUT_GOAL = [
+  'Lost weight or body fat',
+  'Build muscle',
+  'Improve health',
+  'Improve flexibility',
+  'Reduce stree'
+]

@@ -51,11 +51,11 @@ const OnboardSix = ({ navigation, route }: OnboardSixProps) => {
               onPress={handleSelect}
               checkBox={true}
               checked={equipmentList.includes(item) ? true : false}
-              style={
-                equipmentList.includes(item)
+              style={{
+                container: equipmentList.includes(item)
                   ? { borderColor: OTHERDAY_LIME }
                   : undefined
-              }
+              }}
             />
           )}
         />

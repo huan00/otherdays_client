@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  DeviceEventEmitter
-} from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Dimensions } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import React, { useState } from 'react'
 import CustomBtn from '../../components/CustomBtn'
@@ -15,6 +9,8 @@ import {
 } from '../../constants/colors'
 import { RootStackParamList } from 'NavType'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+const WIDTH = Dimensions.get('window').width
+const HEIGHT = Dimensions.get('window').height
 
 type OnboardProps = NativeStackScreenProps<RootStackParamList, 'OnboardOne'>
 
@@ -60,7 +56,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: 'row',
-    width: '100%',
+    width: WIDTH,
     overflow: 'hidden'
   },
   circle: {
@@ -85,6 +81,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   nextBtn: {
-    marginBottom: RFPercentage(6)
+    marginBottom: RFPercentage(9)
   }
 })

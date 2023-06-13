@@ -81,9 +81,15 @@ const OnboardFive = ({ route, navigation }: OnboardFiveProps) => {
             <WorkoutPref
               title={item}
               onPress={setPref}
-              style={
-                workoutPref.includes(item) ? { borderColor: OTHERDAY_LIME } : ''
-              }
+              info={true}
+              style={{
+                container: workoutPref.includes(item)
+                  ? { borderColor: OTHERDAY_LIME }
+                  : undefined,
+                circle: workoutPref.includes(item)
+                  ? { backgroundColor: OTHERDAY_LIME }
+                  : undefined
+              }}
             />
           )}
         />

@@ -4,15 +4,16 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { TEXT_COLOR } from '../constants/colors'
 import { OTHERDAY_LIME } from '../constants/colors'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { CheckBox } from 'react-native-elements'
 
 interface workoutProps {
   title: string
   onPress: (title: string) => void
-  style?: {}
+  style?: { container?: {}; circle?: {} }
   checkBox?: boolean
   checked?: boolean
+  info?: boolean
 }
 
 const WorkoutPref = ({
@@ -20,11 +21,12 @@ const WorkoutPref = ({
   onPress,
   style,
   checkBox,
-  checked
+  checked,
+  info
 }: workoutProps) => {
   return (
     <TouchableOpacity
-      style={[styles.container, style]}
+      style={[styles.container, style?.container]}
       onPress={() => onPress(title)}
     >
       <View style={styles.titleWrapper}>
@@ -33,14 +35,17 @@ const WorkoutPref = ({
             checked={checked}
             disabled={true}
             checkedColor={OTHERDAY_LIME}
+            checkedIcon={
+              <FontAwesomeIcon icon={faCheck} color={OTHERDAY_LIME} />
+            }
           />
         ) : (
-          <View style={styles.circle} />
+          <View style={[styles.circle, style?.circle]} />
         )}
         <Text style={styles.title}>{title}</Text>
       </View>
       <TouchableOpacity style={styles.info}>
-        <FontAwesomeIcon icon={faInfoCircle} color="#fff" />
+        {info && <FontAwesomeIcon icon={faInfoCircle} color="#fff" />}
       </TouchableOpacity>
     </TouchableOpacity>
   )
@@ -69,9 +74,9 @@ const styles = StyleSheet.create({
   },
   circle: {
     borderRadius: RFPercentage(50),
+    backgroundColor: '#555555',
     width: RFPercentage(2),
     aspectRatio: 1 / 1,
-    backgroundColor: OTHERDAY_LIME,
     marginRight: RFPercentage(1)
   },
   title: {

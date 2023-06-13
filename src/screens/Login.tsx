@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity
 } from 'react-native'
+import * as SecureStore from 'expo-secure-store'
 import React, { useState } from 'react'
 import StatusLines from '../components/StatusLines'
 import {
@@ -19,7 +20,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { P_HORIZONTAL } from '../constants/styles'
 import CustomBtn from '../components/CustomBtn'
 import axios from 'axios'
-import BASEURL from '../services'
+import { BASEURL } from '../services'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 
 const WIDTH = Dimensions.get('window').width
@@ -47,6 +48,8 @@ const Login = ({ navigation }: LoginProps) => {
 
     const response = await axios.post(`${BASEURL}/fitness/login`, authData)
     const data = response.data
+    await SecureStore.setItemAsync('fitnessLoginToken', data.token)
+    await SecureStore.setItemAsync('fitnessUser', data.user)
   }
 
   return (
