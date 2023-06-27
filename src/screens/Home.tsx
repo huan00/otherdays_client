@@ -7,15 +7,17 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import StatusLines from '../components/StatusLines'
 import {
   BACKGROUND_COLOR,
   OTHERDAY_LIME,
-  TEXT_COLOR
+  TEXT_COLOR_WHITE
 } from '../constants/colors'
 import CustomBtn from '../components/CustomBtn'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
+import * as SecureStore from 'expo-secure-store'
+import { verifyLogin } from '../services'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -25,6 +27,25 @@ type HomeProps = {
 }
 
 const Home = ({ navigation }: HomeProps) => {
+  const [token, setToken] = useState<string | undefined>('')
+  const [user, setUser] = useState<any>('')
+
+  useEffect(() => {
+    const getToken = async () => {
+      const tokenData = await SecureStore.getItemAsync('fitnessLoginToken')
+      console.log(tokenData)
+      setToken(tokenData?.replace(/"/g, ''))
+    }
+    if (token) {
+      getToken()
+      setUser(verifyLogin(token))
+    }
+
+    if (user) {
+      navigation.navigate('Workout')
+    }
+  }, [token])
+
   const handleBtnPress = () => {
     navigation.navigate('Login')
   }
@@ -32,6 +53,7 @@ const Home = ({ navigation }: HomeProps) => {
   const handleRegister = () => {
     navigation.navigate('OnboardOne')
   }
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -77,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   headline: {
-    color: TEXT_COLOR,
+    color: TEXT_COLOR_WHITE,
     fontSize: RFPercentage(3.6),
     marginBottom: RFPercentage(15)
   },
@@ -90,7 +112,7 @@ const styles = StyleSheet.create({
     paddingVertical: RFPercentage(1)
   },
   register: {
-    color: TEXT_COLOR,
+    color: TEXT_COLOR_WHITE,
     alignSelf: 'center'
   }
 })

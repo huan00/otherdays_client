@@ -12,7 +12,7 @@ import StatusLines from '../../components/StatusLines'
 import {
   BACKGROUND_COLOR,
   ERROR_COLOR,
-  TEXT_COLOR
+  TEXT_COLOR_WHITE
 } from '../../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import CustomInput from '../../components/CustomInput'

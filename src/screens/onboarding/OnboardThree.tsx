@@ -11,7 +11,7 @@ import {
   BACKGROUND_COLOR,
   ERROR_COLOR,
   OTHERDAY_LIME,
-  TEXT_COLOR
+  TEXT_COLOR_WHITE
 } from '../../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'

@@ -1,17 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { TEXT_COLOR } from '../constants/colors'
+import { TEXT_COLOR_WHITE } from '../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'
 
 type props = {
   title: string
+  textStyle?: {}
 }
 
-const OnboardHeading = ({ title }: props) => {
+const OnboardHeading = ({ title, textStyle }: props) => {
   return (
     <View style={styles.headingWrapper}>
-      <Text style={styles.headingText}>{title}</Text>
+      <Text style={[styles.headingText, textStyle]}>{title}</Text>
     </View>
   )
 }
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     marginVertical: RFPercentage(2)
   },
   headingText: {
-    color: TEXT_COLOR,
+    color: TEXT_COLOR_WHITE,
     fontSize: RFPercentage(4)
   }
 })

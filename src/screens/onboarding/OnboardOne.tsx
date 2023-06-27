@@ -5,7 +5,7 @@ import CustomBtn from '../../components/CustomBtn'
 import {
   BACKGROUND_COLOR,
   OTHERDAY_LIME,
-  TEXT_COLOR
+  TEXT_COLOR_WHITE
 } from '../../constants/colors'
 import { RootStackParamList } from 'NavType'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   chatStyle: {
     width: 'auto',
-    color: TEXT_COLOR,
+    color: TEXT_COLOR_WHITE,
     padding: RFPercentage(1),
     backgroundColor: '#282828',
     borderRadius: 10,

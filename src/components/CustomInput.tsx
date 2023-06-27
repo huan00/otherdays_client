@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { STATUSLINE_COLOR, TEXT_COLOR } from '../constants/colors'
+import { STATUSLINE_COLOR, TEXT_COLOR_WHITE } from '../constants/colors'
 
 type InputProps = {
   label?: string
@@ -61,7 +61,7 @@ const CustomInput = ({
           <TouchableOpacity onPress={handleOnPress}>
             <FontAwesomeIcon
               icon={faEyeSlash}
-              color={TEXT_COLOR}
+              color={TEXT_COLOR_WHITE}
               style={styles.faEyeSlash}
               size={RFPercentage(2)}
             />
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: RFPercentage(2),
     paddingVertical: RFPercentage(1),
-    color: TEXT_COLOR
+    color: TEXT_COLOR_WHITE
   },
   faEyeSlash: {
     flex: 1,

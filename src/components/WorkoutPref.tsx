@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { TEXT_COLOR } from '../constants/colors'
+import { TEXT_COLOR_WHITE } from '../constants/colors'
 import { OTHERDAY_LIME } from '../constants/colors'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     marginRight: RFPercentage(1)
   },
   title: {
-    color: TEXT_COLOR
+    color: TEXT_COLOR_WHITE
   },
   info: {
     justifyContent: 'center',

@@ -24,6 +24,37 @@ interface ScreenSix extends ScreenFive {
   equipment_list: string[]
 }
 
+type WorkoutTwoScreen = {
+  date: string
+  cooldown: [
+    {
+      name: string
+      rep: number
+      set: number
+      rest_duration: number
+      duration: number
+    }
+  ]
+  workout: [
+    {
+      name: string
+      rep: number
+      set: number
+      rest_duration: number
+      duration: number
+    }
+  ]
+  warmup: [
+    {
+      name: string
+      rep: number
+      set: number
+      rest_duration: number
+      duration: number
+    }
+  ]
+}
+
 declare module 'NavType' {
   export type RootStackParamList = {
     Home: undefined
@@ -35,6 +66,10 @@ declare module 'NavType' {
     OnboardFive: screenFour
     OnboardSix: screenFive
     OnboardSeven: screenSix
+    Workout
+    WorkoutTwo: WorkoutTwoScreen
+    WorkoutThree: WorkoutTwoScreen
+    WorkoutFour: WorkoutTwoScreen
   }
 }
 

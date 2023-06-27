@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { BACKGROUND_COLOR, TEXT_COLOR } from '../constants/colors'
+import { BACKGROUND_COLOR, TEXT_COLOR_WHITE } from '../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
 type SelectBtnProps = {
@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: TEXT_COLOR,
+    borderColor: TEXT_COLOR_WHITE,
     borderRadius: 50,
 
     paddingHorizontal: RFPercentage(8),
     paddingVertical: RFPercentage(2)
   },
   titleText: {
-    color: TEXT_COLOR
+    color: TEXT_COLOR_WHITE
   }
 })

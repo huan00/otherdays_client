@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import React from 'react'
-import { TEXT_COLOR, OTHERDAY_LIME } from '../constants/colors'
+import { TEXT_COLOR_WHITE, OTHERDAY_LIME } from '../constants/colors'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const WIDTH = Dimensions.get('window').width

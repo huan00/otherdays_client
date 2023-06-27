@@ -13,7 +13,7 @@ import StatusLines from '../components/StatusLines'
 import {
   BACKGROUND_COLOR,
   OTHERDAY_LIME,
-  TEXT_COLOR
+  TEXT_COLOR_WHITE
 } from '../constants/colors'
 import CustomInput from '../components/CustomInput'
 import { RFPercentage } from 'react-native-responsive-fontsize'
@@ -46,10 +46,22 @@ const Login = ({ navigation }: LoginProps) => {
 
     if (!email || !password) return
 
-    const response = await axios.post(`${BASEURL}/fitness/login`, authData)
-    const data = response.data
-    await SecureStore.setItemAsync('fitnessLoginToken', data.token)
-    await SecureStore.setItemAsync('fitnessUser', data.user)
+    try {
+      const response = await axios.post(`${BASEURL}/fitness/login`, authData)
+      const data = response.data
+      await SecureStore.setItemAsync(
+        'fitnessLoginToken',
+        JSON.stringify(data.token)
+      )
+      await SecureStore.setItemAsync('fitnessUser', JSON.stringify(data.user))
+
+      const value = await SecureStore.getItemAsync('fitnessLoginToken')
+
+      console.log(value)
+      navigation.navigate('Workout')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -83,8 +95,8 @@ const Login = ({ navigation }: LoginProps) => {
               title="Continue with Google"
               onPress={() => {}}
               bgColor={BACKGROUND_COLOR}
-              textColor={TEXT_COLOR}
-              btnStyle={{ borderColor: TEXT_COLOR, borderWidth: 1 }}
+              textColor={TEXT_COLOR_WHITE}
+              btnStyle={{ borderColor: TEXT_COLOR_WHITE, borderWidth: 1 }}
             />
           </View>
         </View>
@@ -97,7 +109,7 @@ export default Login
 
 const styles = StyleSheet.create({
   container: {
-    height: HEIGHT,
+    height: '100%',
     backgroundColor: BACKGROUND_COLOR
     // paddingHorizontal: RFPercentage(1)
   },
@@ -114,10 +126,10 @@ const styles = StyleSheet.create({
     left: RFPercentage(1)
   },
   text: {
-    color: TEXT_COLOR
+    color: TEXT_COLOR_WHITE
   },
   titleText: {
-    color: TEXT_COLOR,
+    color: TEXT_COLOR_WHITE,
     fontSize: RFPercentage(1.8),
     fontWeight: '500',
     fontStyle: 'normal',

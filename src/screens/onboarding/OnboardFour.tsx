@@ -11,7 +11,7 @@ import {
 
 import React, { useEffect, useRef, useState } from 'react'
 import StatusLines from '../../components/StatusLines'
-import { BACKGROUND_COLOR, TEXT_COLOR } from '../../constants/colors'
+import { BACKGROUND_COLOR, TEXT_COLOR_WHITE } from '../../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'
 import CustomBtn from '../../components/CustomBtn'
@@ -115,7 +115,7 @@ const OnboardFour = ({ navigation, route }: OnboardFourProps) => {
                 <Text style={styles.text}>
                   <FontAwesomeIcon
                     icon={faCameraRotate}
-                    color={TEXT_COLOR}
+                    color={TEXT_COLOR_WHITE}
                     size={RFPercentage(5)}
                   />
                 </Text>
@@ -126,7 +126,7 @@ const OnboardFour = ({ navigation, route }: OnboardFourProps) => {
               >
                 <FontAwesomeIcon
                   icon={faCamera}
-                  color={TEXT_COLOR}
+                  color={TEXT_COLOR_WHITE}
                   size={RFPercentage(4)}
                 />
               </TouchableOpacity>
