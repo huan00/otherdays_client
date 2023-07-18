@@ -25,14 +25,16 @@ type WorkoutThreeProps = NativeStackScreenProps<
 >
 
 const WorkoutThree = ({ navigation, route }: WorkoutThreeProps) => {
+  const [time, setTime] = useState<string>('0:00')
   const handleFinish = () => {
-    navigation.navigate('WorkoutFour', route.params)
+    navigation.navigate('WorkoutFour', { ...route.params, time })
   }
+
   return (
     <SafeAreaView style={STYLES.container}>
       <OnboardHeading title="Timer" textStyle={{ fontSize: RFPercentage(2) }} />
       <Divider />
-      <Timer />
+      <Timer setTime={setTime} />
       <Divider />
       <View style={{ height: '70%' }}>
         <ScrollView>

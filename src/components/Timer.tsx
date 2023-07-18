@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
-type timerProps = {
-  startTimer: boolean
-  pauseCount: boolean
+type TimerProps = {
+  startTimer?: boolean
+  pauseCount?: boolean
+  setTime: Dispatch<SetStateAction<string>>
 }
 
-const Timer = () => {
+const Timer = ({ setTime }: TimerProps) => {
   const [hourCount, setHourCount] = useState<number>(0)
   const [minCount, setMinCount] = useState<number>(0)
   const [secondCount, setSecondCount] = useState<number>(0)
@@ -25,6 +26,11 @@ const Timer = () => {
       } else {
         setSecondCount(secondCount + 1)
       }
+      setTime(
+        `${hourCount < 0 ? hourCount : '00'}:${
+          minCount > 9 ? minCount : '0' + minCount
+        }:${secondCount > 9 ? secondCount : '0' + secondCount}`
+      )
     }, 1000)
 
     return () => clearInterval(interval)

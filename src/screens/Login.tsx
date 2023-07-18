@@ -5,10 +5,11 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StatusLines from '../components/StatusLines'
 import {
   BACKGROUND_COLOR,
@@ -20,15 +21,11 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { P_HORIZONTAL } from '../constants/styles'
 import CustomBtn from '../components/CustomBtn'
 import axios from 'axios'
-import { BASEURL } from '../services'
+import { BASEURL, verifyLogin } from '../services'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
-
-type RootStackParamList = {
-  Login: undefined
-}
 
 type LoginProps = {
   navigation: NavigationProp<ParamListBase>
@@ -47,18 +44,25 @@ const Login = ({ navigation }: LoginProps) => {
     if (!email || !password) return
 
     try {
+      //  const headers:{
+      //     'Content-Type': 'application/x-www-form-urlencoded',
+      //     'Accept': 'application/json'
+      //   }
+
       const response = await axios.post(`${BASEURL}/fitness/login`, authData)
       const data = response.data
-      await SecureStore.setItemAsync(
-        'fitnessLoginToken',
-        JSON.stringify(data.token)
-      )
-      await SecureStore.setItemAsync('fitnessUser', JSON.stringify(data.user))
-
-      const value = await SecureStore.getItemAsync('fitnessLoginToken')
-
-      console.log(value)
-      navigation.navigate('Workout')
+      if (Platform.OS === 'web') {
+        localStorage.setItem('fitnessUser', JSON.stringify(data.user))
+        localStorage.setItem('fitnessLoginToken', JSON.stringify(data.token))
+        navigation.navigate('Workout')
+      } else {
+        await SecureStore.setItemAsync(
+          'fitnessLoginToken',
+          JSON.stringify(data.token)
+        )
+        await SecureStore.setItemAsync('fitnessUser', JSON.stringify(data.user))
+        navigation.navigate('Workout')
+      }
     } catch (error) {
       console.log(error)
     }
@@ -109,7 +113,8 @@ export default Login
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    width: WIDTH,
+    height: HEIGHT,
     backgroundColor: BACKGROUND_COLOR
     // paddingHorizontal: RFPercentage(1)
   },

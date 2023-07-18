@@ -55,6 +55,38 @@ type WorkoutTwoScreen = {
   ]
 }
 
+type WorkoutThreeScreen = {
+  date: string
+  cooldown: [
+    {
+      name: string
+      rep: number
+      set: number
+      rest_duration: number
+      duration: number
+    }
+  ]
+  workout: [
+    {
+      name: string
+      rep: number
+      set: number
+      rest_duration: number
+      duration: number
+    }
+  ]
+  warmup: [
+    {
+      name: string
+      rep: number
+      set: number
+      rest_duration: number
+      duration: number
+    }
+  ]
+  time: string
+}
+
 declare module 'NavType' {
   export type RootStackParamList = {
     Home: undefined
@@ -69,7 +101,9 @@ declare module 'NavType' {
     Workout
     WorkoutTwo: WorkoutTwoScreen
     WorkoutThree: WorkoutTwoScreen
-    WorkoutFour: WorkoutTwoScreen
+    WorkoutFour: WorkoutThreeScreen
+    Profile
+    Testing
   }
 }
 

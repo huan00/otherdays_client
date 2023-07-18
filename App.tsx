@@ -18,8 +18,8 @@ import {
   WorkoutTwo,
   Workout
 } from './src/screens/workout'
-import { useEffect, useState } from 'react'
-import * as SecureStore from 'expo-secure-store'
+
+import Profile from './src/screens/Profile'
 
 const RootStack = createNativeStackNavigator<RootStackParamList>()
 
@@ -47,6 +47,9 @@ export default function App() {
         <RootStack.Screen name="WorkoutTwo" component={WorkoutTwo} />
         <RootStack.Screen name="WorkoutThree" component={WorkoutThree} />
         <RootStack.Screen name="WorkoutFour" component={WorkoutFour} />
+
+        {/* Profile */}
+        <RootStack.Screen name="Profile" component={Profile} />
       </RootStack.Navigator>
     </NavigationContainer>
   )

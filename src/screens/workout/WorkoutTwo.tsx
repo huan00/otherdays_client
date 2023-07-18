@@ -27,6 +27,8 @@ const WorkoutTwo = ({ navigation, route }: WorkoutProps) => {
     route.params
   )
 
+  console.log(workout)
+
   const mapList = (
     dataList: [
       {

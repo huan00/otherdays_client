@@ -21,9 +21,14 @@ type workoutData = {
 type WorkoutDisplayProps = {
   workoutTitle: string
   workoutData: workoutData[]
+  completed?: boolean
 }
 
-const WorkoutDisplay = ({ workoutData, workoutTitle }: WorkoutDisplayProps) => {
+const WorkoutDisplay = ({
+  workoutData,
+  workoutTitle,
+  completed
+}: WorkoutDisplayProps) => {
   const [tracker, setTracker] = useState<number[]>(
     [...Array(workoutData.length)].map(() => 0)
   )
@@ -45,6 +50,7 @@ const WorkoutDisplay = ({ workoutData, workoutTitle }: WorkoutDisplayProps) => {
       <TouchableOpacity
         style={[styles.exerciseRow]}
         key={index}
+        disabled={completed}
         onPress={() => {
           handlePress(item.set, index)
         }}
@@ -78,7 +84,7 @@ const WorkoutDisplay = ({ workoutData, workoutTitle }: WorkoutDisplayProps) => {
               tracker[index] === item.set ? { color: OTHERDAY_LIME } : {}
             ]}
           >
-            {tracker[index]}
+            {completed ? item.set : tracker[index]}
           </Text>
         </View>
       </TouchableOpacity>

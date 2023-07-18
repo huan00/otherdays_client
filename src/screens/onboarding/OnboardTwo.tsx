@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Keyboard,
-  Platform
+  Platform,
+  Dimensions
 } from 'react-native'
 import { Divider } from 'react-native-elements'
 import React, { useState } from 'react'
@@ -47,8 +48,9 @@ const OnboardTwo = ({ navigation }: OnboardTwoProps) => {
   const isEmail = (email: string) => {
     return emailRegex.test(email)
   }
-  const isKeyboardVisible = Keyboard.isVisible()
-  const keyboardHeight = useKeyboard()
+  const isKeyboardVisible =
+    Platform.OS === 'web' ? undefined : Keyboard.isVisible()
+  const keyboardHeight = Platform.OS === 'web' ? undefined : useKeyboard()
 
   const handleNextPress = () => {
     if (!name.first_name || !name.last_name) {
@@ -125,8 +127,15 @@ const OnboardTwo = ({ navigation }: OnboardTwoProps) => {
       <View
         style={[
           styles.nextBtn,
-          isKeyboardVisible && Platform.OS === 'ios'
-            ? { bottom: keyboardHeight.keyboardHeight + RFPercentage(5) }
+
+          Platform.OS === 'web'
+            ? {}
+            : isKeyboardVisible && Platform.OS === 'ios'
+            ? {
+                bottom: keyboardHeight
+                  ? keyboardHeight.keyboardHeight + RFPercentage(5)
+                  : ''
+              }
             : { bottom: RFPercentage(6) }
         ]}
       >
@@ -153,7 +162,7 @@ export default OnboardTwo
 const styles = StyleSheet.create({
   container: {
     backgroundColor: BACKGROUND_COLOR,
-    height: '100%'
+    height: Dimensions.get('window').height
   },
   nameWrapper: {
     flexDirection: 'row',

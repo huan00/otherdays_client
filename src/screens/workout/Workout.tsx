@@ -1,4 +1,11 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import {
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native'
 import * as SecureStore from 'expo-secure-store'
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -18,6 +25,8 @@ import { BASEURL } from '../../services'
 import { RootStackParamList } from 'NavType'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import Loading from '../../components/Loading'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faGear } from '@fortawesome/free-solid-svg-icons'
 
 type WorkoutProps = NativeStackScreenProps<RootStackParamList, 'Workout'>
 
@@ -58,7 +67,11 @@ const Workout = ({ navigation }: WorkoutProps) => {
       muscleGroup: muscleGroup
     }
 
-    const token = await SecureStore.getItemAsync('fitnessLoginToken')
+    console.log(data)
+    const token =
+      Platform.OS === 'web'
+        ? localStorage.getItem('fitnessLoginToken')
+        : await SecureStore.getItemAsync('fitnessLoginToken')
 
     const headers = {
       'Content-Type': 'application/json',
@@ -76,12 +89,21 @@ const Workout = ({ navigation }: WorkoutProps) => {
     }
   }
 
+  const handlePressGear = () => {
+    navigation.navigate('Profile')
+  }
+
   return (
     <SafeAreaView style={[STYLES.container]}>
-      <OnboardHeading
-        title="Let's start a workout"
-        textStyle={{ fontSize: RFPercentage(2) }}
-      />
+      <View style={styles.headerWrapper}>
+        <OnboardHeading
+          title="Let's start a workout"
+          textStyle={{ fontSize: RFPercentage(2) }}
+        />
+        <TouchableOpacity style={styles.gearWrapper} onPress={handlePressGear}>
+          <FontAwesomeIcon icon={faGear} color="white" size={RFPercentage(2)} />
+        </TouchableOpacity>
+      </View>
       <Divider />
       <View style={[styles.mainWrapper]}>
         <Text style={[STYLES.grayText]}>Prompt</Text>
@@ -115,6 +137,14 @@ const Workout = ({ navigation }: WorkoutProps) => {
 export default Workout
 
 const styles = StyleSheet.create({
+  headerWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  gearWrapper: {
+    paddingRight: RFPercentage(1)
+  },
   mainWrapper: {
     paddingHorizontal: RFPercentage(1),
     marginTop: RFPercentage(4)

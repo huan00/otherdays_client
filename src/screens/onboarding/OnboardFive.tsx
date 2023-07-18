@@ -31,8 +31,9 @@ type OnboardFiveProps = NativeStackScreenProps<
 >
 
 const OnboardFive = ({ route, navigation }: OnboardFiveProps) => {
-  const isKeyboardVisible = Keyboard.isVisible()
-  const keyboardHeight = useKeyboard()
+  const isKeyboardVisible =
+    Platform.OS === 'web' ? undefined : Keyboard.isVisible()
+  const keyboardHeight = Platform.OS === 'web' ? undefined : useKeyboard()
 
   const [workoutPref, setWorkoutPref] = useState<string[]>([])
 
@@ -99,7 +100,11 @@ const OnboardFive = ({ route, navigation }: OnboardFiveProps) => {
         style={[
           styles.nextBtn,
           isKeyboardVisible && Platform.OS === 'ios'
-            ? { bottom: keyboardHeight.keyboardHeight + RFPercentage(5) }
+            ? {
+                bottom: keyboardHeight
+                  ? keyboardHeight.keyboardHeight + RFPercentage(5)
+                  : undefined
+              }
             : styles.androidKeyboard
         ]}
       >

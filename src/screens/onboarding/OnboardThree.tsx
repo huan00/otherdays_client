@@ -38,8 +38,9 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
   const [weight, setWeight] = useState<string>()
   const [feet, setFeet] = useState<string>()
   const [inches, setInches] = useState<string>()
-  const isKeyboardVisible = Keyboard.isVisible()
-  const keyboardHeight = useKeyboard()
+  const isKeyboardVisible =
+    Platform.OS === 'web' ? undefined : Keyboard.isVisible()
+  const keyboardHeight = Platform.OS === 'web' ? undefined : useKeyboard()
 
   const handleGenderPress = (data: string) => {
     setGender(data)
@@ -83,7 +84,11 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
     }
     // DeviceEventEmitter.emit('event.userInfo', data)
 
-    navigation.navigate('OnboardFour', userInfo)
+    if (Platform.OS === 'web') {
+      navigation.navigate('OnboardFive', { ...userInfo, profile_image: '' })
+    } else {
+      navigation.navigate('OnboardFour', userInfo)
+    }
   }
 
   return (
@@ -178,7 +183,11 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
         style={[
           styles.nextBtn,
           isKeyboardVisible && Platform.OS === 'ios'
-            ? { bottom: keyboardHeight.keyboardHeight + RFPercentage(5) }
+            ? {
+                bottom: keyboardHeight
+                  ? keyboardHeight.keyboardHeight + RFPercentage(5)
+                  : undefined
+              }
             : { bottom: RFPercentage(6) }
         ]}
       >

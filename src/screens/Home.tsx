@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import React, { useEffect, useState } from 'react'
@@ -27,27 +28,33 @@ type HomeProps = {
 }
 
 const Home = ({ navigation }: HomeProps) => {
-  const [token, setToken] = useState<string | undefined>('')
+  // const [token, setToken] = useState<string | undefined>('')
   const [user, setUser] = useState<any>('')
 
   useEffect(() => {
     const getToken = async () => {
-      const tokenData = await SecureStore.getItemAsync('fitnessLoginToken')
-      console.log(tokenData)
-      setToken(tokenData?.replace(/"/g, ''))
+      const res =
+        Platform.OS === 'web'
+          ? localStorage.getItem('fitnessLoginToken')
+          : await SecureStore.getItemAsync('fitnessLoginToken')
+      const token = res?.replace(/"/g, '')
+      if (token) {
+        setUser(await verifyLogin(token))
+      }
     }
-    if (token) {
-      getToken()
-      setUser(verifyLogin(token))
-    }
+    getToken()
+  })
 
-    if (user) {
-      navigation.navigate('Workout')
-    }
-  }, [token])
+  useEffect(() => {
+    if (user) navigation.navigate('Workout')
+  }, [user])
 
   const handleBtnPress = () => {
-    navigation.navigate('Login')
+    if (user) {
+      navigation.navigate('Workout')
+    } else {
+      navigation.navigate('Login')
+    }
   }
 
   const handleRegister = () => {
@@ -87,7 +94,7 @@ export default Home
 const styles = StyleSheet.create({
   container: {
     width: WIDTH,
-    height: '100%',
+    height: HEIGHT,
     backgroundColor: BACKGROUND_COLOR,
     justifyContent: 'space-between',
     paddingHorizontal: RFPercentage(1)

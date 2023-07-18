@@ -9,6 +9,10 @@ export const STYLES = StyleSheet.create({
     height: '100%'
   },
   inputText: {},
+  whiteText: {
+    color: 'white',
+    fontSize: RFPercentage(2)
+  },
   grayText: {
     fontSize: RFPercentage(2),
     color: '#737373'
