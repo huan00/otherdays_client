@@ -1,4 +1,11 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native'
 import React, { useState } from 'react'
 import { STYLES } from '../../util/styles'
 import StatusLines from '../../components/StatusLines'
@@ -43,11 +50,14 @@ const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
       if (key === 'height') {
         formData.append(key, JSON.stringify(value))
       } else if (key === 'profile_image') {
-        formData.append(key, {
-          uri: value,
-          name: 'profile_image.jpg',
-          type: 'image/jpg'
-        })
+        if (Platform.OS === 'web') {
+        } else {
+          formData.append(key, {
+            uri: value,
+            name: 'profile_image.jpg',
+            type: 'image/jpg'
+          })
+        }
       } else {
         formData.append(key, value)
       }
@@ -65,7 +75,7 @@ const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
         console.log('successful')
         setUser(res.data)
       })
-      .catch((err) => console.log(err.data))
+      .catch((err) => console.log(err))
 
     navigation.navigate('Login')
   }

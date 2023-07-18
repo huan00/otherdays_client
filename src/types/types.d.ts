@@ -13,7 +13,7 @@ interface screenThree extends screenTwo {
 }
 
 interface screenFour extends screenThree {
-  profile_image: string
+  profile_image: string | Blob
 }
 
 interface screenFive extends screenFour {

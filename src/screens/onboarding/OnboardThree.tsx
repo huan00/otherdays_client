@@ -85,7 +85,13 @@ const OnboardThree = ({ navigation, route }: OnboardThreeProps) => {
     // DeviceEventEmitter.emit('event.userInfo', data)
 
     if (Platform.OS === 'web') {
-      navigation.navigate('OnboardFive', { ...userInfo, profile_image: '' })
+      const uri =
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Duser&psig=AOvVaw0SKwJsCanJHHaCw2NU7Xoi&ust=1689785461709000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCJivqMTbmIADFQAAAAAdAAAAABAE'
+
+      navigation.navigate('OnboardFive', {
+        ...userInfo,
+        profile_image: uri
+      })
     } else {
       navigation.navigate('OnboardFour', userInfo)
     }
