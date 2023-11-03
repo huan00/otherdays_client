@@ -51,16 +51,16 @@ export const WORKOUT_MUSCLE = [
 ]
 
 export const WORKOUT_TIME = [
-  { label: '15', value: '15' },
-  { label: '20', value: '20' },
-  { label: '25', value: '25' },
-  { label: '30', value: '30' },
-  { label: '35', value: '35' },
-  { label: '40', value: '40' },
-  { label: '45', value: '45' },
-  { label: '50', value: '50' },
-  { label: '55', value: '55' },
-  { label: '60', value: '60' }
+  { label: '15 minutes', value: '15 minutes' },
+  { label: '20 minutes', value: '20 minutes' },
+  { label: '25 minutes', value: '25 minutes' },
+  { label: '30 minutes', value: '30 minutes' },
+  { label: '35 minutes', value: '35 minutes' },
+  { label: '40 minutes', value: '40 minutes' },
+  { label: '45 minutes', value: '45 minutes' },
+  { label: '50 minutes', value: '50 minutes' },
+  { label: '55 minutes', value: '55 minutes' },
+  { label: '60 minutes', value: '60 minutes' }
 ]
 
 export const WORKOUT_EQUIPMENTS = [

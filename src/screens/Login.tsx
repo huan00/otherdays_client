@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react'
 import StatusLines from '../components/StatusLines'
 import {
   BACKGROUND_COLOR,
+  INACTIVE_COLOR,
   OTHERDAY_LIME,
   TEXT_COLOR_WHITE
 } from '../constants/colors'
@@ -96,9 +97,9 @@ const Login = ({ navigation }: LoginProps) => {
             <Text style={[styles.text, styles.otherText]}>or</Text>
 
             <CustomBtn
-              title="Continue with Google"
+              title="Continue with Google - Coming soon"
               onPress={() => {}}
-              bgColor={BACKGROUND_COLOR}
+              bgColor={INACTIVE_COLOR}
               textColor={TEXT_COLOR_WHITE}
               btnStyle={{ borderColor: TEXT_COLOR_WHITE, borderWidth: 1 }}
             />

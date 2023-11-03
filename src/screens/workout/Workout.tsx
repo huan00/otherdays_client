@@ -109,10 +109,12 @@ const Workout = ({ navigation }: WorkoutProps) => {
         <Text style={[STYLES.grayText]}>Prompt</Text>
         <View style={styles.promptWrapper}>
           <Text style={[styles.promptText]}>
-            A {renderDropDown(WORKOUT_LEVEL, level, setLevel)}{' '}
-            {renderDropDown(WORKOUT_MUSCLE, muscleGroup, setMuscleGroup)}{' '}
-            workout that focuses on BUILDING Muscle for{' '}
-            {renderDropDown(WORKOUT_TIME, workoutTime, setWorkoutTime)} MINUTES
+            Start a {'\n'}
+            {renderDropDown(WORKOUT_LEVEL, level, setLevel)}
+            {'\n'}
+            {renderDropDown(WORKOUT_MUSCLE, muscleGroup, setMuscleGroup)} {'\n'}{' '}
+            level workout that focuses on BUILDING Muscle for{' '}
+            {renderDropDown(WORKOUT_TIME, workoutTime, setWorkoutTime)} {'\n'}
             with{' '}
             {renderDropDown(
               WORKOUT_EQUIPMENTS,
