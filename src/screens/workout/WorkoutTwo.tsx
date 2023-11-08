@@ -14,10 +14,10 @@ import { RootStackParamList } from 'NavType'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { STYLES } from '../../util/styles'
-import { Divider } from 'react-native-elements'
+// import { Divider } from 'react-native-elements'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import CustomBtn from '../../components/CustomBtn'
-import Timer from '../../components/Timer'
+// import Timer from '../../components/Timer'
 
 type WorkoutProps = NativeStackScreenProps<RootStackParamList, 'WorkoutTwo'>
 const HEIGHT = Dimensions.get('window').height
@@ -27,7 +27,7 @@ const WorkoutTwo = ({ navigation, route }: WorkoutProps) => {
     route.params
   )
 
-  console.log(workout)
+  console.log(route.params)
 
   const mapList = (
     dataList: [
@@ -50,7 +50,11 @@ const WorkoutTwo = ({ navigation, route }: WorkoutProps) => {
       >
         {dataList.map((item, index) => (
           <View style={{ flexDirection: 'row' }} key={index}>
-            <Text style={STYLES.grayText}>Rep: {item.rep} | </Text>
+            {item.rep ? (
+              <Text style={STYLES.grayText}>Rep: {item.rep} | </Text>
+            ) : (
+              <Text style={STYLES.grayText}>Time: {item.duration} | </Text>
+            )}
             <Text style={STYLES.grayText}>{item.name}</Text>
           </View>
         ))}
@@ -76,21 +80,24 @@ const WorkoutTwo = ({ navigation, route }: WorkoutProps) => {
             <View style={styles.workoutPrompt}>
               <Text style={styles.promptTextHeader}>Workout</Text>
               <Text style={styles.promptText}>
-                A intermediate core workout that focuses on building strong abs
-                for 30 minutes with my equipment
+                A {route.params.prompt.workoutLevel.toLowerCase()}{' '}
+                {route.params.prompt.muscleGroup.toLowerCase()} workout that
+                focuses on {route.params.prompt.workoutGoal.toLowerCase()} for{' '}
+                {route.params.prompt.workoutTime.toLowerCase()} with{' '}
+                {route.params.prompt.workoutEquipment.toLowerCase()}
               </Text>
             </View>
           </ImageBackground>
         </View>
         <View style={styles.bottomContent}>
-          <View style={styles.bottomHeader}>
+          {/* <View style={styles.bottomHeader}>
             <Text style={STYLES.grayText}>Strenght Training</Text>
             <Text style={STYLES.grayText}>
               Helps to build muscle strength and endurance. Improve your
               posture, reduce your risk of injuries, and make it easier to
               perform everyday tasks.
             </Text>
-          </View>
+          </View> */}
           <View style={styles.exerciseWrapper}>
             <Text style={STYLES.grayText}>
               Warm up- {workout.warmup[0].set} set

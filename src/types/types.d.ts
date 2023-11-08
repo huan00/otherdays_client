@@ -26,6 +26,13 @@ interface ScreenSix extends ScreenFive {
 
 type WorkoutTwoScreen = {
   date: string
+  prompt: {
+    workoutLevel: string
+    workoutTime: string
+    workoutEquipment: string
+    muscleGroup: string
+    workoutGoal: string
+  }
   cooldown: [
     {
       name: string

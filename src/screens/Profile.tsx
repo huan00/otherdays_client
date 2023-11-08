@@ -159,7 +159,7 @@ const Profile = ({ navigation }: ProfileProps) => {
           <View style={styles.btnLayout}>
             <CustomBtn
               title={'Home'}
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => navigation.navigate('Workout')}
               btnStyle={{ width: '45%' }}
             />
             <CustomBtn

@@ -1,4 +1,5 @@
 import {
+  Dimensions,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -13,9 +14,12 @@ import { STYLES } from '../../util/styles'
 import OnboardHeading from '../../components/OnboardHeading'
 import { Divider } from 'react-native-elements'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { Dropdown, MultiSelect } from 'react-native-element-dropdown'
+// import { Dropdown } from 'react-native-element-dropdown'
+// import DropDownPicker from 'react-native-dropdown-picker'
 import {
   WORKOUT_EQUIPMENTS,
+  WORKOUT_GOAL,
+  WORKOUT_GOAL_PROMPT,
   WORKOUT_LEVEL,
   WORKOUT_MUSCLE,
   WORKOUT_TIME
@@ -27,47 +31,31 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import Loading from '../../components/Loading'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
+import { FormDataType } from '../../types'
+import Dropdown from '../../components/Dropdown'
+
+type Props = {
+  data: {
+    label: string
+    value: string
+  }[]
+  value: string | null
+  setValue: React.Dispatch<React.SetStateAction<string | null>>
+}
 
 type WorkoutProps = NativeStackScreenProps<RootStackParamList, 'Workout'>
 
 const Workout = ({ navigation }: WorkoutProps) => {
   const [loader, setLoader] = useState<boolean>(false)
-  const [level, setLevel] = useState<string>(WORKOUT_LEVEL[0].value)
-  const [workoutTime, setWorkoutTime] = useState<string>(WORKOUT_TIME[0].value)
-  const [workoutEquipment, setWorkoutEquipment] = useState<string>(
-    WORKOUT_EQUIPMENTS[0].value
-  )
-  const [muscleGroup, setMuscleGroup] = useState<string>(
-    WORKOUT_MUSCLE[0].value
-  )
-
-  const renderDropDown = (
-    DropDowndata: { label: string; value: string }[],
-    data: string,
-    setData: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    return (
-      <Dropdown
-        style={[styles.dropDownWrapper]}
-        selectedTextStyle={styles.dropDownText}
-        data={DropDowndata}
-        labelField={'label'}
-        valueField={'value'}
-        onChange={(item) => setData(item.value)}
-        value={data}
-      />
-    )
-  }
+  const [formData, setFormData] = useState<FormDataType>({
+    workoutLevel: WORKOUT_LEVEL[0].value,
+    workoutTime: WORKOUT_TIME[0].value,
+    workoutEquipment: WORKOUT_EQUIPMENTS[0].value,
+    muscleGroup: WORKOUT_MUSCLE[0].value,
+    workoutGoal: WORKOUT_GOAL_PROMPT[0].value
+  })
 
   const handlePress = async () => {
-    const data = {
-      workoutLevel: level,
-      workoutTime: workoutTime,
-      workoutEquipment: workoutEquipment,
-      muscleGroup: muscleGroup
-    }
-
-    console.log(data)
     const token =
       Platform.OS === 'web'
         ? localStorage.getItem('fitnessLoginToken')
@@ -78,20 +66,22 @@ const Workout = ({ navigation }: WorkoutProps) => {
       Authorization: `token ` + token?.replace(/"/g, '')
     }
     setLoader(true)
-    const res = await axios.post(`${BASEURL}/fitness/getworkout`, data, {
+    const res = await axios.post(`${BASEURL}/fitness/getworkout`, formData, {
       headers
     })
 
     setLoader(false)
 
     if (res.data) {
-      navigation.navigate('WorkoutTwo', res.data)
+      navigation.navigate('WorkoutTwo', { prompt: formData, ...res.data })
     }
   }
 
   const handlePressGear = () => {
     navigation.navigate('Profile')
   }
+
+  console.log(formData)
 
   return (
     <SafeAreaView style={[STYLES.container]}>
@@ -107,23 +97,92 @@ const Workout = ({ navigation }: WorkoutProps) => {
       <Divider />
       <View style={[styles.mainWrapper]}>
         <Text style={[STYLES.grayText]}>Prompt</Text>
-        <View style={styles.promptWrapper}>
-          <Text style={[styles.promptText]}>
-            Start a {'\n'}
-            {renderDropDown(WORKOUT_LEVEL, level, setLevel)}
-            {'\n'}
-            {renderDropDown(WORKOUT_MUSCLE, muscleGroup, setMuscleGroup)} {'\n'}{' '}
-            level workout that focuses on BUILDING Muscle for{' '}
-            {renderDropDown(WORKOUT_TIME, workoutTime, setWorkoutTime)} {'\n'}
-            with{' '}
-            {renderDropDown(
-              WORKOUT_EQUIPMENTS,
-              workoutEquipment,
-              setWorkoutEquipment
-            )}
-          </Text>
+
+        <View style={{ width: '100%', flexDirection: 'column' }}>
+          {/* <Text style={[styles.promptText, { color: 'white', width: '100%' }]}> */}
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center'
+            }}
+          >
+            <View style={{ flex: 0 }}>
+              <Text style={styles.promptText}>A </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                flex: 1
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Dropdown
+                  formData={formData}
+                  data={WORKOUT_LEVEL}
+                  title="workoutLevel"
+                  setData={setFormData}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Dropdown
+                  formData={formData}
+                  data={WORKOUT_MUSCLE}
+                  title="muscleGroup"
+                  setData={setFormData}
+                />
+              </View>
+              <View>
+                <Text style={styles.promptText}>workout</Text>
+              </View>
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row', zIndex: -100 }}>
+            <View style={{ flex: 0 }}>
+              <Text style={[styles.promptText, {}]}>that focus on </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Dropdown
+                formData={formData}
+                data={WORKOUT_GOAL_PROMPT}
+                title="workoutGoal"
+                setData={setFormData}
+              />
+            </View>
+          </View>
+          <View
+            style={{ flexDirection: 'row', flexWrap: 'wrap', zIndex: -200 }}
+          >
+            <View style={{ flex: 0 }}>
+              <Text style={styles.promptText}>for </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Dropdown
+                formData={formData}
+                data={WORKOUT_TIME}
+                title="workoutTime"
+                setData={setFormData}
+              />
+            </View>
+            <View style={{ flex: 0 }}>
+              <Text style={styles.promptText}>with </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row', zIndex: -300 }}>
+            <View style={{ flex: 1 }}>
+              <Dropdown
+                formData={formData}
+                data={WORKOUT_EQUIPMENTS}
+                title="workoutEquipment"
+                setData={setFormData}
+              />
+            </View>
+          </View>
+          {/* </Text> */}
         </View>
       </View>
+
       <View style={STYLES.nextBtn}>
         <CustomBtn
           title="Get Workout"
@@ -152,12 +211,17 @@ const styles = StyleSheet.create({
     marginTop: RFPercentage(4)
   },
   promptWrapper: {
+    // borderColor: 'white',
+    // borderWidth: 1,
+    flexDirection: 'row',
     marginTop: RFPercentage(1),
     alignItems: 'flex-start'
   },
   promptText: {
+    justifyContent: 'flex-start',
     color: 'white',
     fontSize: RFPercentage(3.5)
+    // textDecorationLine: 'underline'
   },
   dropDownWrapper: {
     width: RFPercentage(26.5),
@@ -167,17 +231,11 @@ const styles = StyleSheet.create({
   },
   dropDownText: {
     fontSize: RFPercentage(3.5),
-    color: 'white',
+    color: 'red',
     borderBottomColor: 'red',
     borderBottomWidth: 1
     // flexDirection: 'row',
     // alignSelf: 'flex-end',
     // justifyContent: 'center'
   }
-  // dropDownPlaceholder: {
-  //   color: 'red',
-  //   fontSize: RFPercentage(3.5),
-  //   alignSelf: 'flex-end',
-  //   justifyContent: 'center'
-  // },
 })
