@@ -21,6 +21,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { BASEURL } from '../../services'
 import axios from 'axios'
 import { RootStackParamList } from '../../types/types'
+import { useAuth } from '../../context/AppContext'
 
 type OnboardSevenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -29,7 +30,7 @@ type OnboardSevenProps = NativeStackScreenProps<
 
 const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
   const [workoutGoal, setWorkoutGoal] = useState<string[]>([])
-  const [user, setUser] = useState<any>({})
+  const { user, setUser } = useAuth()
 
   const handleSelect = (goal: string) => {
     const currentList = new Set(workoutGoal)

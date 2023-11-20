@@ -18,11 +18,11 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'
 import Label from '../components/Label'
 import CustomBtn from '../components/CustomBtn'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import { UserType } from '../types'
 import ProfileSetting from '../components/ProfileSetting'
 import WorkoutHistory from '../components/WorkoutHistory'
+import { useAuth } from '../context/AppContext'
 
 type Props = {
   navigation: NavigationProp<ParamListBase>
@@ -41,7 +41,7 @@ type UserSettingType = {
 }
 
 const Profile = ({ navigation }: Props) => {
-  const [user, setUser] = useState<UserType>()
+  const { user, setUser } = useAuth()
   const [userSetting, setUserSetting] = useState<UserSettingType | undefined>()
   const [isUserProfile, setIsUserProfile] = useState<boolean>(false)
   const [isWorkoutPref, setIsWorkoutPref] = useState<boolean>(false)
@@ -49,20 +49,20 @@ const Profile = ({ navigation }: Props) => {
   const [isEquipment, setIsEquipment] = useState<boolean>(false)
   const [isWorkoutHistory, setIsWorkoutHistory] = useState<boolean>(false)
 
-  useEffect(() => {
-    const getToken = async () => {
-      let res =
-        Platform.OS === 'web'
-          ? localStorage.getItem('fitnessLoginToken')
-          : await SecureStore.getItemAsync('fitnessLoginToken')
-      let temp = res?.replaceAll(/"/g, '')
-      if (temp) {
-        const response = await verifyLogin(temp)
-        setUser(JSON.parse(response))
-      }
-    }
-    getToken()
-  }, [])
+  // useEffect(() => {
+  //   const getToken = async () => {
+  //     let res =
+  //       Platform.OS === 'web'
+  //         ? localStorage.getItem('fitnessLoginToken')
+  //         : await SecureStore.getItemAsync('fitnessLoginToken')
+  //     let temp = res?.replaceAll(/"/g, '')
+  //     if (temp) {
+  //       const response = await verifyLogin(temp)
+  //       setUser(JSON.parse(response))
+  //     }
+  //   }
+  //   getToken()
+  // }, [])
 
   useEffect(() => {
     if (user) {
@@ -89,16 +89,11 @@ const Profile = ({ navigation }: Props) => {
     setUser(updateUser)
   }
 
-  console.log(user)
-
   return (
     <SafeAreaView style={STYLES.container}>
       {user ? (
         <>
           <View style={[styles.headerContainer]}>
-            {/* <View style={{ borderColor: 'red', borderWidth: 1 }}>
-              <Text style={STYLES.whiteText}>Profile</Text>
-            </View> */}
             <View style={[styles.userHeader]}>
               <Image
                 source={{ uri: `${BASEURL}${user?.profile_image}` }}
@@ -293,6 +288,7 @@ const Profile = ({ navigation }: Props) => {
                   await SecureStore.deleteItemAsync('fitnessLoginToken')
                   await SecureStore.deleteItemAsync('fitnessUser')
                 }
+                setUser(undefined)
                 navigation.navigate('Home')
               }}
             />
@@ -338,13 +334,14 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1,
     borderColor: 'white',
     borderWidth: 1,
-    borderStyle: 'dotted',
+    // borderStyle: 'solid',
     borderRadius: RFPercentage(50)
   },
   btnLayout: {
-    width: '100%',
+    width: '95%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignSelf: 'center'
   },
   headerText: {
     fontSize: RFPercentage(2.5)

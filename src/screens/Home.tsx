@@ -8,7 +8,7 @@ import {
   Platform
 } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import StatusLines from '../components/StatusLines'
 import {
   BACKGROUND_COLOR,
@@ -20,6 +20,7 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import * as SecureStore from 'expo-secure-store'
 import { verifyLogin } from '../services'
 import { UserType } from '../types'
+import { AppContext, UserContextType, useAuth } from '../context/AppContext'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -29,8 +30,9 @@ type HomeProps = {
 }
 
 const Home = ({ navigation }: HomeProps) => {
-  // const [token, setToken] = useState<string | undefined>('')
-  const [user, setUser] = useState<UserType>()
+  const { user, setUser } = useAuth()
+
+  console.log(user)
 
   useEffect(() => {
     const getToken = async () => {
@@ -41,17 +43,19 @@ const Home = ({ navigation }: HomeProps) => {
       const token = res?.replace(/"/g, '')
       if (token) {
         const res = await verifyLogin(token)
-        setUser(res)
+
+        setUser(JSON.parse(res))
       }
     }
     getToken()
-  })
+  }, [])
 
   useEffect(() => {
     if (user) navigation.navigate('Workout', { user })
   }, [user])
 
   const handleBtnPress = () => {
+    console.log(user)
     if (user) {
       navigation.navigate('Workout')
     } else {

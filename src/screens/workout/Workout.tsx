@@ -32,6 +32,7 @@ import {
   ParamListBase,
   RouteProp
 } from '@react-navigation/native'
+import { useAuth } from '../../context/AppContext'
 
 type Props = {
   navigation: NavigationProp<ParamListBase>
@@ -39,7 +40,7 @@ type Props = {
 }
 
 const Workout = ({ navigation, route }: Props) => {
-  // const user: UserType = route?.params?.user
+  const { user } = useAuth()
   const [loader, setLoader] = useState<boolean>(false)
   const [formData, setFormData] = useState<FormDataType>({
     workoutLevel: WORKOUT_LEVEL[0].value,
