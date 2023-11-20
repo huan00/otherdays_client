@@ -7,25 +7,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { Divider } from 'react-native-elements'
 import WorkoutDisplay from '../../components/WorkoutDisplay'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from 'NavType'
 import { OTHERDAY_LIME } from '../../constants/colors'
 import CustomBtn from '../../components/CustomBtn'
+import {
+  NavigationProp,
+  ParamListBase,
+  RouteProp
+} from '@react-navigation/native'
+import { WorkoutThreeScreen } from '../../types/types'
 
-type WorkoutFourProps = NativeStackScreenProps<
-  RootStackParamList,
-  'WorkoutFour'
->
+type Props = {
+  navigation: NavigationProp<ParamListBase>
+  route: RouteProp<{ WorkoutFour: WorkoutThreeScreen }, 'WorkoutFour'>
+}
 
-const WorkoutFour = ({ navigation, route }: WorkoutFourProps) => {
+const WorkoutFour = ({ navigation, route }: Props) => {
   const getDateFormat = (workoutDate: string): string => {
     const date = new Date()
     const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' })
-    const day = date.getDate()
-    const month = date.toLocaleDateString('en-US', { month: 'long' })
+    // const day = date.getDate()
+    // const month = date.toLocaleDateString('en-US', { month: 'long' })
 
     return dayOfWeek
   }
+
+  console.log(route.params)
+
   return (
     <SafeAreaView style={STYLES.container}>
       <View style={styles.backBtn}>
@@ -101,7 +108,7 @@ const WorkoutFour = ({ navigation, route }: WorkoutFourProps) => {
       <CustomBtn
         title="Home"
         onPress={() => {
-          navigation.navigate('Home')
+          navigation.navigate('Workout')
         }}
         btnStyle={{ position: 'absolute', bottom: 0 }}
       />

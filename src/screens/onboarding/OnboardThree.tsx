@@ -22,9 +22,10 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useKeyboard } from '@react-native-community/hooks'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from 'NavType'
+
 import OnboardHeading from '../../components/OnboardHeading'
 import { SIGNUP_STEPS } from '../../constants/workoutProgram'
+import { RootStackParamList } from '../../types/types'
 
 type OnboardThreeProps = NativeStackScreenProps<
   RootStackParamList,

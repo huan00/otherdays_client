@@ -17,9 +17,10 @@ import { OTHERDAY_LIME } from '../../constants/colors'
 import CustomBtn from '../../components/CustomBtn'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from 'NavType'
+
 import { BASEURL } from '../../services'
 import axios from 'axios'
+import { RootStackParamList } from '../../types/types'
 
 type OnboardSevenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -63,11 +64,11 @@ const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
       }
     }
 
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'multipart/form-data' },
-      body: formData
-    }
+    // const options = {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'multipart/form-data' },
+    //   body: formData
+    // }
 
     const res = await axios
       .post(`${BASEURL}/fitness/register`, formData)

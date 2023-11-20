@@ -1,10 +1,8 @@
 import {
-  FlatList,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View
 } from 'react-native'
 import React, { useState } from 'react'
@@ -14,19 +12,63 @@ import { STYLES } from '../../util/styles'
 import OnboardHeading from '../../components/OnboardHeading'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from 'NavType'
 import { OTHERDAY_LIME } from '../../constants/colors'
+import * as SecureStore from 'expo-secure-store'
+
 import WorkoutDisplay from '../../components/WorkoutDisplay'
+import {
+  NavigationProp,
+  ParamListBase,
+  RouteProp
+} from '@react-navigation/native'
+import { WorkoutTwoScreen } from '../../types/types'
+import axios from 'axios'
+import { BASEURL } from '../../services'
 
-type WorkoutThreeProps = NativeStackScreenProps<
-  RootStackParamList,
-  'WorkoutThree'
->
+type Props = {
+  navigation: NavigationProp<ParamListBase>
+  route: RouteProp<{ WorkoutThree: WorkoutTwoScreen }, 'WorkoutThree'>
+}
 
-const WorkoutThree = ({ navigation, route }: WorkoutThreeProps) => {
+const WorkoutThree = ({ navigation, route }: Props) => {
   const [time, setTime] = useState<string>('0:00')
-  const handleFinish = () => {
+  const handleFinish = async () => {
+    // sent work out to the back
+    const token =
+      Platform.OS === 'web'
+        ? localStorage.getItem('fitnessLoginToken')
+        : await SecureStore.getItemAsync('fitnessLoginToken')
+
+    const workout_data = {
+      workout_form: {
+        user: route?.params?.user?.id,
+        date: route.params.date,
+        calories: 0,
+        distance: 0,
+        notes: route.params.prompt.muscleGroup
+      },
+      exercises: {
+        warmup: route.params.warmup,
+        workout: route.params.workout,
+        cooldown: route.params.cooldown
+      }
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `token ` + token?.replace(/"/g, '')
+    }
+
+    const res = axios.post(
+      `${BASEURL}/fitness/saveworkout`,
+      JSON.stringify(workout_data),
+      {
+        headers
+      }
+    )
+
+    console.log(res)
+
     navigation.navigate('WorkoutFour', { ...route.params, time })
   }
 

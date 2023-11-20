@@ -19,6 +19,7 @@ import CustomBtn from '../components/CustomBtn'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import * as SecureStore from 'expo-secure-store'
 import { verifyLogin } from '../services'
+import { UserType } from '../types'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -29,7 +30,7 @@ type HomeProps = {
 
 const Home = ({ navigation }: HomeProps) => {
   // const [token, setToken] = useState<string | undefined>('')
-  const [user, setUser] = useState<any>('')
+  const [user, setUser] = useState<UserType>()
 
   useEffect(() => {
     const getToken = async () => {
@@ -39,14 +40,15 @@ const Home = ({ navigation }: HomeProps) => {
           : await SecureStore.getItemAsync('fitnessLoginToken')
       const token = res?.replace(/"/g, '')
       if (token) {
-        setUser(await verifyLogin(token))
+        const res = await verifyLogin(token)
+        setUser(res)
       }
     }
     getToken()
   })
 
   useEffect(() => {
-    if (user) navigation.navigate('Workout')
+    if (user) navigation.navigate('Workout', { user })
   }, [user])
 
   const handleBtnPress = () => {

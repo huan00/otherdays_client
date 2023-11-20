@@ -5,29 +5,32 @@ import {
   View,
   ImageBackground,
   ScrollView,
-  Dimensions,
-  FlatList
+  Dimensions
 } from 'react-native'
 import React, { useState } from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from 'NavType'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { STYLES } from '../../util/styles'
-// import { Divider } from 'react-native-elements'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import CustomBtn from '../../components/CustomBtn'
-// import Timer from '../../components/Timer'
+import {
+  NavigationProp,
+  ParamListBase,
+  RouteProp
+} from '@react-navigation/native'
 
-type WorkoutProps = NativeStackScreenProps<RootStackParamList, 'WorkoutTwo'>
+import { WorkoutTwoScreen } from '../../types/types'
+
+type Props = {
+  navigation: NavigationProp<ParamListBase>
+  // route: RouteProp<{ params: WorkoutTwoScreen }, 'params'>
+  route: RouteProp<{ WorkoutTwo: WorkoutTwoScreen }, 'WorkoutTwo'>
+  // }
+}
 const HEIGHT = Dimensions.get('window').height
 
-const WorkoutTwo = ({ navigation, route }: WorkoutProps) => {
-  const [workout, setWorkout] = useState<RootStackParamList['WorkoutTwo']>(
-    route.params
-  )
-
-  console.log(route.params)
+const WorkoutTwo = ({ navigation, route }: Props) => {
+  const [workout, setWorkout] = useState<WorkoutTwoScreen>(route.params)
 
   const mapList = (
     dataList: [
@@ -53,7 +56,7 @@ const WorkoutTwo = ({ navigation, route }: WorkoutProps) => {
             {item.rep ? (
               <Text style={STYLES.grayText}>Rep: {item.rep} | </Text>
             ) : (
-              <Text style={STYLES.grayText}>Time: {item.duration} | </Text>
+              <Text style={STYLES.grayText}>Time: {item.duration} sec | </Text>
             )}
             <Text style={STYLES.grayText}>{item.name}</Text>
           </View>

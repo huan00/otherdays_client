@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, ParamListBase } from '@react-navigation/native'
 import Home from './src/screens/Home'
 import Login from './src/screens/Login'
 import {
@@ -10,7 +10,7 @@ import {
   OnboardSix,
   OnboardSeven
 } from './src/screens/onboarding'
-import { RootStackParamList } from 'NavType'
+import { RootStackParamList } from './src/types/types'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {
   WorkoutFour,

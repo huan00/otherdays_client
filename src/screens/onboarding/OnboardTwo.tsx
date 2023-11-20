@@ -21,10 +21,11 @@ import CustomBtn from '../../components/CustomBtn'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useKeyboard } from '@react-native-community/hooks'
-import { RootStackParamList } from 'NavType'
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import OnboardHeading from '../../components/OnboardHeading'
 import { SIGNUP_STEPS } from '../../constants/workoutProgram'
+import { RootStackParamList } from '../../types/types'
 
 type OnboardTwoProps = NativeStackScreenProps<RootStackParamList, 'OnboardTwo'>
 

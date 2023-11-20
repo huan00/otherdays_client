@@ -19,11 +19,12 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { useKeyboard } from '@react-native-community/hooks'
 import { OTHERDAY_LIME } from '../../constants/colors'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from 'NavType'
+
 import { SIGNUP_STEPS, WORKOUT_PROGRAM } from '../../constants/workoutProgram'
 import WorkoutPref from '../../components/WorkoutPref'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { RootStackParamList } from '../../types/types'
 
 type OnboardFiveProps = NativeStackScreenProps<
   RootStackParamList,

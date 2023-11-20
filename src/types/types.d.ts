@@ -1,3 +1,5 @@
+import { UserType } from '.'
+
 interface screenTwo {
   first_name: string
   last_name: string
@@ -24,7 +26,7 @@ interface ScreenSix extends ScreenFive {
   equipment_list: string[]
 }
 
-type WorkoutTwoScreen = {
+export type WorkoutTwoScreen = {
   date: string
   prompt: {
     workoutLevel: string
@@ -50,6 +52,7 @@ type WorkoutTwoScreen = {
       rest_duration: number
       duration: number
     }
+    // user: {}
   ]
   warmup: [
     {
@@ -60,6 +63,7 @@ type WorkoutTwoScreen = {
       duration: number
     }
   ]
+  user?: UserType
 }
 
 type WorkoutThreeScreen = {
@@ -91,27 +95,26 @@ type WorkoutThreeScreen = {
       duration: number
     }
   ]
-  time: string
+  time?: string
+  user?: UserType
 }
 
-declare module 'NavType' {
-  export type RootStackParamList = {
-    Home: undefined
-    Login
-    OnboardOne
-    OnboardTwo
-    OnboardThree: screenTwo
-    OnboardFour: screenThree
-    OnboardFive: screenFour
-    OnboardSix: screenFive
-    OnboardSeven: screenSix
-    Workout
-    WorkoutTwo: WorkoutTwoScreen
-    WorkoutThree: WorkoutTwoScreen
-    WorkoutFour: WorkoutThreeScreen
-    Profile
-    Testing
-  }
+export type RootStackParamList = {
+  Home: undefined
+  Login
+  OnboardOne
+  OnboardTwo
+  OnboardThree: screenTwo
+  OnboardFour: screenThree
+  OnboardFive: screenFour
+  OnboardSix: screenFive
+  OnboardSeven: screenSix
+  Workout: UserType
+  WorkoutTwo: WorkoutTwoScreen
+  WorkoutThree: WorkoutTwoScreen
+  WorkoutFour: WorkoutThreeScreen
+  Profile
+  Testing
 }
 
 declare module '*.png' {

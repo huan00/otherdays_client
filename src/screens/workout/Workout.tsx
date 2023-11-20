@@ -1,5 +1,4 @@
 import {
-  Dimensions,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -14,11 +13,8 @@ import { STYLES } from '../../util/styles'
 import OnboardHeading from '../../components/OnboardHeading'
 import { Divider } from 'react-native-elements'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-// import { Dropdown } from 'react-native-element-dropdown'
-// import DropDownPicker from 'react-native-dropdown-picker'
 import {
   WORKOUT_EQUIPMENTS,
-  WORKOUT_GOAL,
   WORKOUT_GOAL_PROMPT,
   WORKOUT_LEVEL,
   WORKOUT_MUSCLE,
@@ -26,26 +22,24 @@ import {
 } from '../../constants/workoutProgram'
 import CustomBtn from '../../components/CustomBtn'
 import { BASEURL } from '../../services'
-import { RootStackParamList } from 'NavType'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import Loading from '../../components/Loading'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
-import { FormDataType } from '../../types'
+import { FormDataType, UserType } from '../../types'
 import Dropdown from '../../components/Dropdown'
+import {
+  NavigationProp,
+  ParamListBase,
+  RouteProp
+} from '@react-navigation/native'
 
 type Props = {
-  data: {
-    label: string
-    value: string
-  }[]
-  value: string | null
-  setValue: React.Dispatch<React.SetStateAction<string | null>>
+  navigation: NavigationProp<ParamListBase>
+  route: RouteProp<{ Workout: UserType }, 'Workout'>
 }
 
-type WorkoutProps = NativeStackScreenProps<RootStackParamList, 'Workout'>
-
-const Workout = ({ navigation }: WorkoutProps) => {
+const Workout = ({ navigation, route }: Props) => {
+  // const user: UserType = route?.params?.user
   const [loader, setLoader] = useState<boolean>(false)
   const [formData, setFormData] = useState<FormDataType>({
     workoutLevel: WORKOUT_LEVEL[0].value,
@@ -69,6 +63,7 @@ const Workout = ({ navigation }: WorkoutProps) => {
     const res = await axios.post(`${BASEURL}/fitness/getworkout`, formData, {
       headers
     })
+    console.log(res)
 
     setLoader(false)
 
@@ -80,8 +75,6 @@ const Workout = ({ navigation }: WorkoutProps) => {
   const handlePressGear = () => {
     navigation.navigate('Profile')
   }
-
-  console.log(formData)
 
   return (
     <SafeAreaView style={[STYLES.container]}>
@@ -99,7 +92,6 @@ const Workout = ({ navigation }: WorkoutProps) => {
         <Text style={[STYLES.grayText]}>Prompt</Text>
 
         <View style={{ width: '100%', flexDirection: 'column' }}>
-          {/* <Text style={[styles.promptText, { color: 'white', width: '100%' }]}> */}
           <View
             style={{
               width: '100%',
@@ -139,7 +131,12 @@ const Workout = ({ navigation }: WorkoutProps) => {
             </View>
           </View>
           <View style={{ flexDirection: 'row', zIndex: -100 }}>
-            <View style={{ flex: 0 }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row'
+              }}
+            >
               <Text style={[styles.promptText, {}]}>that focus on </Text>
             </View>
             <View style={{ flex: 1 }}>
@@ -154,8 +151,14 @@ const Workout = ({ navigation }: WorkoutProps) => {
           <View
             style={{ flexDirection: 'row', flexWrap: 'wrap', zIndex: -200 }}
           >
-            <View style={{ flex: 0 }}>
-              <Text style={styles.promptText}>for </Text>
+            <View
+              style={{
+                flexShrink: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start'
+              }}
+            >
+              <Text style={[{ flex: 1 }, styles.promptText]}>for </Text>
             </View>
             <View style={{ flex: 1 }}>
               <Dropdown
@@ -165,11 +168,11 @@ const Workout = ({ navigation }: WorkoutProps) => {
                 setData={setFormData}
               />
             </View>
-            <View style={{ flex: 0 }}>
-              <Text style={styles.promptText}>with </Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.promptText}> with </Text>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', zIndex: -300 }}>
+          <View style={{ flexShrink: 1, flexDirection: 'row', zIndex: -300 }}>
             <View style={{ flex: 1 }}>
               <Dropdown
                 formData={formData}
@@ -179,7 +182,6 @@ const Workout = ({ navigation }: WorkoutProps) => {
               />
             </View>
           </View>
-          {/* </Text> */}
         </View>
       </View>
 
