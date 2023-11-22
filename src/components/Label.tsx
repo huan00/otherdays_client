@@ -15,28 +15,30 @@ import { faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
 type label = {
   value: string
   label: string
-  onChange: (
+  edit?: boolean
+  onBlur: (
     label: string,
+    // event: string
     event: NativeSyntheticEvent<TextInputChangeEventData>
   ) => void
 }
 
-const Label = ({ value, label, onChange }: label) => {
-  const [edit, setEdit] = useState<boolean>(false)
+const Label = ({ value, label, onBlur, edit = false }: label) => {
+  // const [edit, setEdit] = useState<boolean>(false)
   const refInput = useRef<TextInput>(null)
 
-  const handleEdit = () => {
-    setEdit(!edit)
+  // const handleEdit = () => {
+  //   setEdit(!edit)
 
-    if (edit) refInput.current?.focus()
-  }
+  //   if (edit) refInput.current?.focus()
+  // }
 
   return (
     <View style={styles.container}>
       <TextInput
         ref={refInput}
         defaultValue={value}
-        onChange={(event) => onChange(label, event)}
+        onBlur={(event) => onBlur(label, event)}
         placeholderTextColor={'white'}
         style={styles.textInput}
         editable={edit}

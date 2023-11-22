@@ -13,16 +13,15 @@ import {
 import React, { useEffect, useState } from 'react'
 import { STYLES } from '../util/styles'
 import * as SecureStore from 'expo-secure-store'
-import { BASEURL, verifyLogin } from '../services'
+import { BASEURL } from '../services'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'
 import Label from '../components/Label'
 import CustomBtn from '../components/CustomBtn'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
-import { UserType } from '../types'
-import ProfileSetting from '../components/ProfileSetting'
 import WorkoutHistory from '../components/WorkoutHistory'
 import { useAuth } from '../context/AppContext'
+import MyProfile from '../components/MyProfile'
 
 type Props = {
   navigation: NavigationProp<ParamListBase>
@@ -118,7 +117,8 @@ const Profile = ({ navigation }: Props) => {
             }}
           >
             <View>
-              <Text
+              <MyProfile />
+              {/* <Text
                 style={[
                   STYLES.whiteText,
                   { marginTop: RFPercentage(2) },
@@ -171,7 +171,7 @@ const Profile = ({ navigation }: Props) => {
                   label={'height'}
                   onChange={handleUpdate}
                 />
-              </View>
+              </View> */}
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>
