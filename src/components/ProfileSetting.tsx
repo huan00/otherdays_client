@@ -15,7 +15,7 @@ const ProfileSetting = ({ title, data }: Props) => {
   const keys = Object.keys(data)
 
   // console.log(keys[0])
-  console.log(data)
+  // console.log(data)
 
   const handleUpdate = () => {}
   return (

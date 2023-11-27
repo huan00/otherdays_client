@@ -83,7 +83,7 @@ const OnboardFour = ({ navigation, route }: OnboardFourProps) => {
   const handleNextPress = () => {
     if (!image) return
     const userInfo = route.params
-    console.log(image)
+    // console.log(image)
     const data = { ...userInfo, profile_image: image }
 
     navigation.navigate('OnboardFive', data)

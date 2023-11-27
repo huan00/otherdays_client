@@ -32,8 +32,6 @@ type HomeProps = {
 const Home = ({ navigation }: HomeProps) => {
   const { user, setUser } = useAuth()
 
-  console.log(user)
-
   useEffect(() => {
     const getToken = async () => {
       const res =
@@ -55,7 +53,7 @@ const Home = ({ navigation }: HomeProps) => {
   }, [user])
 
   const handleBtnPress = () => {
-    console.log(user)
+    // console.log(user)
     if (user) {
       navigation.navigate('Workout')
     } else {

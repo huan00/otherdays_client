@@ -1,48 +1,71 @@
 import {
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   TextInput,
+  Text,
   TextInputChangeEventData,
-  TouchableOpacity,
-  View
+  View,
+  KeyboardTypeOptions
 } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 type label = {
   value: string
   label: string
   edit?: boolean
-  onBlur: (
+  editRef?: React.MutableRefObject<TextInput | null>
+  inputType?: KeyboardTypeOptions
+  onChange: (
     label: string,
     // event: string
     event: NativeSyntheticEvent<TextInputChangeEventData>
   ) => void
 }
 
-const Label = ({ value, label, onBlur, edit = false }: label) => {
+const Label = ({
+  value,
+  label,
+  onChange,
+  edit = false,
+  editRef,
+  inputType
+}: label) => {
   // const [edit, setEdit] = useState<boolean>(false)
-  const refInput = useRef<TextInput>(null)
+  const [onChangeValue, setOnChangeValue] = useState<string>(value)
+  // const refInput = useRef<TextInput>(null)
 
   // const handleEdit = () => {
   //   setEdit(!edit)
 
   //   if (edit) refInput.current?.focus()
   // }
+  // console.log(edit)
+
+  // const onChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+  //   console.log(event.nativeEvent.text)
+  //   setOnChangeValue(event.nativeEvent.text)
+  // }
+
+  useEffect(() => {
+    if (edit && label === 'first_name') {
+      editRef?.current?.focus()
+    }
+  }, [edit])
 
   return (
     <View style={styles.container}>
+      <Text style={{ color: 'white', fontSize: RFPercentage(1.8) }}>
+        {label.toLocaleUpperCase().replace('_', ' ')}:{' '}
+      </Text>
       <TextInput
-        ref={refInput}
-        defaultValue={value}
-        onBlur={(event) => onBlur(label, event)}
+        ref={editRef}
+        value={value}
+        keyboardType={inputType}
+        onChange={(event) => onChange(label, event)}
         placeholderTextColor={'white'}
-        style={styles.textInput}
+        style={[styles.textInput, !edit && { color: 'gray' }]}
         editable={edit}
-        selection={{ start: 1, end: 5 }}
       />
       {/* <TouchableOpacity style={styles.editWrapper} onPress={handleEdit}>
         {edit ? (
@@ -70,7 +93,7 @@ const styles = StyleSheet.create({
     marginVertical: RFPercentage(2),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'flex-end'
   },
   textInput: {
     flex: 1,

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Platform } from 'react-native'
+import * as SecureStore from 'expo-secure-store'
 
 export const BASEURL = 'http://127.0.0.1:8000'
 // export const BASEURL =
@@ -26,4 +27,27 @@ export const verifyLogin = async (token) => {
   // const res = await fetch(`${BASEURL}/fitness/verifylogin`, { headers })
 
   return res.data
+}
+
+export const updateUser = async (data, token) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: 'token ' + token
+  }
+
+  const res = await axios.put(`${BASEURL}/fitness/updateuser`, data, {
+    headers
+  })
+
+  console.log(res)
+}
+
+export const getToken = async () => {
+  const res =
+    Platform.OS === 'web'
+      ? localStorage.getItem('fitnessLoginToken')
+      : await SecureStore.getItemAsync('fitnessLoginToken')
+  const token = res?.replace(/"/g, '')
+
+  return token
 }

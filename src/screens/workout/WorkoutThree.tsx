@@ -67,7 +67,7 @@ const WorkoutThree = ({ navigation, route }: Props) => {
       }
     )
 
-    console.log(res)
+    // console.log(res)
 
     navigation.navigate('WorkoutFour', { ...route.params, time })
   }

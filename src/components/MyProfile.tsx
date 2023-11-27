@@ -1,23 +1,27 @@
 import {
   Dimensions,
   NativeSyntheticEvent,
+  Platform,
   StyleSheet,
   Text,
+  TextInput,
   TextInputChangeEventData,
   TouchableOpacity,
   View
 } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import * as SecureStore from 'expo-secure-store'
+
+import React, { useEffect, useRef, useState } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { STYLES } from '../util/styles'
 import { useAuth } from '../context/AppContext'
 import Label from './Label'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faCancel, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { UserType } from '../types'
+import { getToken, updateUser, verifyLogin } from '../services'
 
 type EditDataType = {
-  email: string
   first_name: string
   last_name: string
   gender: string
@@ -29,19 +33,36 @@ const MyProfile = () => {
   const { user, setUser } = useAuth()
   const [isUserProfile, setIsUserProfile] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [editUserData, setEditUserData] = useState<UserType | undefined>(user)
+  const [editAbleUserData, setEditAbleUserData] = useState<
+    UserType | undefined
+  >(user)
+  const editRef = useRef<TextInput | null>(null)
 
-  const handleUpdate = (
+  const handleOnChange = (
     label: string,
     // text: string
     event: NativeSyntheticEvent<TextInputChangeEventData>
   ): void => {
-    console.log(event)
     // const updateUser: any = { ...user, [label]: event.nativeEvent.text }
     // setUser(updateUser)
-    if (editUserData) {
-      const updateData = { ...editUserData, [label]: event.nativeEvent.text }
-      setEditUserData(updateData)
+    if (editAbleUserData) {
+      if (
+        label.toUpperCase() === 'feet'.toUpperCase() ||
+        label.toUpperCase() === 'inches'.toUpperCase()
+      ) {
+        const tempHeight: UserType = { ...editAbleUserData }
+        tempHeight.height = {
+          ...tempHeight.height,
+          [label]: event.nativeEvent.text
+        }
+        setEditAbleUserData(tempHeight)
+      } else {
+        const updateData = {
+          ...editAbleUserData,
+          [label]: event.nativeEvent.text
+        }
+        setEditAbleUserData(updateData)
+      }
     }
   }
 
@@ -49,7 +70,30 @@ const MyProfile = () => {
     setIsEdit(!isEdit)
   }
 
-  console.log(editUserData)
+  const handleCancelEditPress = (): void => {
+    setEditAbleUserData(user)
+    setIsEdit(!isEdit)
+  }
+
+  const handleUpdate = async () => {
+    const resToken =
+      Platform.OS === 'web'
+        ? localStorage.getItem('fitnessLoginToken')
+        : await SecureStore.getItemAsync('fitnessLoginToken')
+    const token = resToken?.replace(/"/g, '')
+    // const token = getToken()
+    if (editAbleUserData) {
+      const updatedData: EditDataType = {
+        first_name: editAbleUserData?.first_name,
+        last_name: editAbleUserData?.last_name,
+        gender: editAbleUserData?.gender,
+        weight: editAbleUserData?.weight,
+        height: editAbleUserData?.height
+      }
+      const res = await updateUser(updatedData, token)
+    }
+    setIsEdit(!isEdit)
+  }
 
   return (
     <View>
@@ -75,20 +119,46 @@ const MyProfile = () => {
               My Profiles
             </Text>
             {isUserProfile && (
-              <TouchableOpacity
+              <View
                 style={{
                   justifyContent: 'flex-end',
                   alignItems: 'flex-end'
                 }}
-                onPress={handleEditPress}
               >
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  color="white"
-                  size={RFPercentage(2.5)}
-                  style={{}}
-                />
-              </TouchableOpacity>
+                {!isEdit ? (
+                  <TouchableOpacity onPress={handleEditPress}>
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      color="white"
+                      size={RFPercentage(2.5)}
+                      style={{}}
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      gap: RFPercentage(2)
+                    }}
+                  >
+                    <TouchableOpacity onPress={handleCancelEditPress}>
+                      <FontAwesomeIcon
+                        icon={faCancel}
+                        color="white"
+                        size={RFPercentage(2.5)}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleUpdate}>
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        color="white"
+                        size={RFPercentage(2.5)}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
             )}
           </View>
 
@@ -99,48 +169,76 @@ const MyProfile = () => {
             }}
           >
             <Label
-              value={editUserData ? editUserData.email : ''}
-              edit={isEdit}
+              value={editAbleUserData ? editAbleUserData.email : ''}
+              edit={false}
               label={'email'}
-              onBlur={handleUpdate}
+              onChange={handleOnChange}
             />
             <Label
-              value={editUserData ? editUserData.first_name : ''}
+              value={editAbleUserData ? editAbleUserData.first_name : ''}
               edit={isEdit}
               label={'first_name'}
-              onBlur={handleUpdate}
+              onChange={handleOnChange}
+              editRef={editRef}
             />
             <Label
-              value={editUserData ? editUserData.last_name : ''}
+              value={editAbleUserData ? editAbleUserData.last_name : ''}
               edit={isEdit}
               label={'last_name'}
-              onBlur={handleUpdate}
+              onChange={handleOnChange}
             />
             <Label
-              value={editUserData ? editUserData.gender : ''}
+              value={editAbleUserData ? editAbleUserData.gender : ''}
               edit={isEdit}
               label={'gender'}
-              onBlur={handleUpdate}
+              onChange={handleOnChange}
             />
             <Label
-              value={editUserData ? editUserData.weight.toString() + 'lbs' : ''}
+              value={editAbleUserData ? editAbleUserData.weight.toString() : ''}
               edit={isEdit}
+              inputType="numeric"
               label={'weight'}
-              onBlur={handleUpdate}
+              onChange={handleOnChange}
             />
-            <Label
-              value={
-                editUserData
-                  ? editUserData.height.feet.toString() +
-                    ' feet ' +
-                    editUserData.height.inches.toString() +
-                    ' inches'
-                  : ''
-              }
-              edit={isEdit}
-              label={'height'}
-              onBlur={handleUpdate}
-            />
+            <View
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+                alignItems: 'center'
+              }}
+            >
+              <View>
+                <Text style={{ color: 'white', fontSize: RFPercentage(2) }}>
+                  HEIGTH:{' '}
+                </Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Label
+                  value={
+                    editAbleUserData
+                      ? editAbleUserData.height.feet.toString()
+                      : ''
+                  }
+                  edit={isEdit}
+                  label={'feet'}
+                  inputType="numeric"
+                  onChange={handleOnChange}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Label
+                  value={
+                    editAbleUserData
+                      ? editAbleUserData.height.inches.toString()
+                      : ''
+                  }
+                  edit={isEdit}
+                  label={'inches'}
+                  inputType="numeric"
+                  onChange={handleOnChange}
+                />
+              </View>
+            </View>
           </View>
         </>
       )}
