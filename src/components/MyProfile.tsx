@@ -29,6 +29,11 @@ type EditDataType = {
   height: { feet: number; inches: number }
 }
 
+type ErrorType = {
+  message: string
+  response: { data: { error: string }; status: number; statusText: string }
+}
+
 const MyProfile = () => {
   const { user, setUser } = useAuth()
   const [isUserProfile, setIsUserProfile] = useState<boolean>(false)
@@ -76,23 +81,27 @@ const MyProfile = () => {
   }
 
   const handleUpdate = async () => {
-    const resToken =
-      Platform.OS === 'web'
-        ? localStorage.getItem('fitnessLoginToken')
-        : await SecureStore.getItemAsync('fitnessLoginToken')
-    const token = resToken?.replace(/"/g, '')
-    // const token = getToken()
-    if (editAbleUserData) {
-      const updatedData: EditDataType = {
-        first_name: editAbleUserData?.first_name,
-        last_name: editAbleUserData?.last_name,
-        gender: editAbleUserData?.gender,
-        weight: editAbleUserData?.weight,
-        height: editAbleUserData?.height
+    try {
+      const resToken =
+        Platform.OS === 'web'
+          ? localStorage.getItem('fitnessLoginToken')
+          : await SecureStore.getItemAsync('fitnessLoginToken')
+      const token = resToken?.replace(/"/g, '')
+
+      if (editAbleUserData) {
+        const updatedData: EditDataType = {
+          first_name: editAbleUserData?.first_name,
+          last_name: editAbleUserData?.last_name,
+          gender: editAbleUserData?.gender,
+          weight: editAbleUserData?.weight,
+          height: editAbleUserData?.height
+        }
+        const res = await updateUser(updatedData, token)
       }
-      const res = await updateUser(updatedData, token)
+      setIsEdit(!isEdit)
+    } catch (error) {
+      const result = (error as Error).message
     }
-    setIsEdit(!isEdit)
   }
 
   return (
@@ -114,6 +123,9 @@ const MyProfile = () => {
               ]}
               onPress={() => {
                 setIsUserProfile(!isUserProfile)
+                if (isEdit) {
+                  setIsEdit(!isEdit)
+                }
               }}
             >
               My Profiles

@@ -7,7 +7,7 @@ import {
   View,
   KeyboardTypeOptions
 } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
 type label = {
@@ -31,22 +31,6 @@ const Label = ({
   editRef,
   inputType
 }: label) => {
-  // const [edit, setEdit] = useState<boolean>(false)
-  const [onChangeValue, setOnChangeValue] = useState<string>(value)
-  // const refInput = useRef<TextInput>(null)
-
-  // const handleEdit = () => {
-  //   setEdit(!edit)
-
-  //   if (edit) refInput.current?.focus()
-  // }
-  // console.log(edit)
-
-  // const onChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
-  //   console.log(event.nativeEvent.text)
-  //   setOnChangeValue(event.nativeEvent.text)
-  // }
-
   useEffect(() => {
     if (edit && label === 'first_name') {
       editRef?.current?.focus()
@@ -66,22 +50,8 @@ const Label = ({
         placeholderTextColor={'white'}
         style={[styles.textInput, !edit && { color: 'gray' }]}
         editable={edit}
+        selectTextOnFocus={true}
       />
-      {/* <TouchableOpacity style={styles.editWrapper} onPress={handleEdit}>
-        {edit ? (
-          <FontAwesomeIcon
-            icon={faCheck}
-            color="white"
-            size={RFPercentage(2.5)}
-          />
-        ) : (
-          <FontAwesomeIcon
-            icon={faEdit}
-            color="white"
-            size={RFPercentage(2.5)}
-          />
-        )}
-      </TouchableOpacity> */}
     </View>
   )
 }

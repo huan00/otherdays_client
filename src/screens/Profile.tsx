@@ -22,6 +22,7 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import WorkoutHistory from '../components/WorkoutHistory'
 import { useAuth } from '../context/AppContext'
 import MyProfile from '../components/MyProfile'
+import MyProfileWorkPref from '../components/MyProfileWorkPref'
 
 type Props = {
   navigation: NavigationProp<ParamListBase>
@@ -88,6 +89,8 @@ const Profile = ({ navigation }: Props) => {
     setUser(updateUser)
   }
 
+  console.log(user?.workoutPreference)
+
   return (
     <SafeAreaView style={STYLES.container}>
       {user ? (
@@ -118,64 +121,11 @@ const Profile = ({ navigation }: Props) => {
           >
             <View>
               <MyProfile />
-              {/* <Text
-                style={[
-                  STYLES.whiteText,
-                  { marginTop: RFPercentage(2) },
-                  styles.headerText
-                ]}
-                onPress={() => {
-                  setIsUserProfile(!isUserProfile)
-                }}
-              >
-                My Profile
-              </Text>
-              <View
-                style={{
-                  display: isUserProfile ? 'flex' : 'none',
-                  paddingLeft: RFPercentage(3)
-                }}
-              >
-                <Label
-                  value={user.email}
-                  label={'email'}
-                  onChange={handleUpdate}
-                />
-                <Label
-                  value={user.first_name}
-                  label={'first_name'}
-                  onChange={handleUpdate}
-                />
-                <Label
-                  value={user.last_name}
-                  label={'last_name'}
-                  onChange={handleUpdate}
-                />
-                <Label
-                  value={user.gender}
-                  label={'gender'}
-                  onChange={handleUpdate}
-                />
-                <Label
-                  value={user.weight.toString() + 'lbs'}
-                  label={'weight'}
-                  onChange={handleUpdate}
-                />
-                <Label
-                  value={
-                    user.height.feet.toString() +
-                    ' feet ' +
-                    user.height.inches.toString() +
-                    ' inches'
-                  }
-                  label={'height'}
-                  onChange={handleUpdate}
-                />
-              </View> */}
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>
-              <Text
+              <MyProfileWorkPref data={user.workoutPreference} />
+              {/* <Text
                 style={[STYLES.whiteText, styles.headerText]}
                 onPress={() => {
                   setIsWorkoutPref(!isWorkoutPref)
@@ -199,7 +149,7 @@ const Profile = ({ navigation }: Props) => {
                     />
                   ))
                 )}
-              </View>
+              </View> */}
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>
