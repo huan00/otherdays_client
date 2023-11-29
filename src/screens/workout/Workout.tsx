@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { STYLES } from '../../util/styles'
 import OnboardHeading from '../../components/OnboardHeading'
 import { Divider } from 'react-native-elements'
@@ -21,7 +21,7 @@ import {
   WORKOUT_TIME
 } from '../../constants/workoutProgram'
 import CustomBtn from '../../components/CustomBtn'
-import { BASEURL } from '../../services'
+import { BASEURL, verifyLogin } from '../../services'
 import Loading from '../../components/Loading'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
@@ -40,7 +40,7 @@ type Props = {
 }
 
 const Workout = ({ navigation, route }: Props) => {
-  const { user } = useAuth()
+  const { setUser } = useAuth()
   const [loader, setLoader] = useState<boolean>(false)
   const [formData, setFormData] = useState<FormDataType>({
     workoutLevel: WORKOUT_LEVEL[0].value,
@@ -49,6 +49,23 @@ const Workout = ({ navigation, route }: Props) => {
     muscleGroup: WORKOUT_MUSCLE[0].value,
     workoutGoal: WORKOUT_GOAL_PROMPT[0].value
   })
+
+  useEffect(() => {
+    const getToken = async () => {
+      const res =
+        Platform.OS === 'web'
+          ? localStorage.getItem('fitnessLoginToken')
+          : await SecureStore.getItemAsync('fitnessLoginToken')
+      const token = res?.replace(/"/g, '')
+      if (token) {
+        const res = await verifyLogin(token)
+
+        setUser(JSON.parse(res))
+      }
+    }
+    getToken()
+    console.log('hello')
+  }, [])
 
   const handlePress = async () => {
     const token =

@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { STYLES } from '../util/styles'
 import * as SecureStore from 'expo-secure-store'
-import { BASEURL } from '../services'
+import { BASEURL, verifyLogin } from '../services'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'
 import Label from '../components/Label'
@@ -90,6 +90,23 @@ const Profile = ({ navigation }: Props) => {
   }
 
   console.log(user?.workoutPreference)
+
+  const handleHomePress = () => {
+    const getToken = async () => {
+      const res =
+        Platform.OS === 'web'
+          ? localStorage.getItem('fitnessLoginToken')
+          : await SecureStore.getItemAsync('fitnessLoginToken')
+      const token = res?.replace(/"/g, '')
+      if (token) {
+        const res = await verifyLogin(token)
+
+        setUser(JSON.parse(res))
+      }
+    }
+    getToken()
+    navigation.navigate('Workout')
+  }
 
   return (
     <SafeAreaView style={STYLES.container}>
@@ -224,7 +241,7 @@ const Profile = ({ navigation }: Props) => {
           <View style={styles.btnLayout}>
             <CustomBtn
               title={'Home'}
-              onPress={() => navigation.navigate('Workout')}
+              onPress={handleHomePress}
               btnStyle={{ width: '45%' }}
             />
             <CustomBtn

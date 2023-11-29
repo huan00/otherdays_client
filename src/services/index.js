@@ -35,11 +35,20 @@ export const updateUser = async (data, token) => {
     Authorization: 'token ' + token
   }
 
-  const res = await axios.put(`${BASEURL}/fitness/updateuser`, data, {
+  await axios.put(`${BASEURL}/fitness/updateuser`, data, {
     headers
   })
+}
 
-  console.log(res)
+export const updateUserPref = async (data, token) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: 'token ' + token
+  }
+
+  return await axios.put(`${BASEURL}/fitness/updateuserpref`, data, {
+    headers
+  })
 }
 
 export const getToken = async () => {

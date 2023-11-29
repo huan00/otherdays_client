@@ -1,5 +1,6 @@
 import {
   FlatList,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,6 +14,9 @@ import Dropdown from './Dropdown'
 import { WORKOUT_PROGRAM } from '../constants/workoutProgram'
 import WorkoutPref from './WorkoutPref'
 import { OTHERDAY_LIME } from '../constants/colors'
+import { updateUserPref, verifyLogin } from '../services'
+import * as SecureStore from 'expo-secure-store'
+import { useAuth } from '../context/AppContext'
 
 type Props = {
   data: {
@@ -26,10 +30,11 @@ type Props = {
 }
 
 const MyProfileWorkPref = ({ data }: Props) => {
+  const { setUser } = useAuth()
   const [isShow, setIsShow] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [workoutPref, setWorkoutPref] = useState<string[]>(
-    data[0].preference.map((item) => {
+    data[0]?.preference?.map((item) => {
       return item.name
     })
   )
@@ -45,23 +50,42 @@ const MyProfileWorkPref = ({ data }: Props) => {
     return result
   }
 
-  const handleUpdatePref = (item: string) => {
-    if (workoutPref.includes(item)) {
+  const handleUpdateSelect = (item: string) => {
+    if (workoutPref?.includes(item)) {
       const index = workoutPref.indexOf(item)
       console.log(index)
-      const tempPref = [...workoutPref]
+      const tempPref = workoutPref ? [...workoutPref] : []
       tempPref.splice(index, 1)
       setWorkoutPref(tempPref)
     } else {
-      const tempPref = [...workoutPref]
+      const tempPref = workoutPref ? [...workoutPref] : []
       tempPref.push(item)
       setWorkoutPref(tempPref)
     }
   }
 
+  const handleUpdatePref = async () => {
+    const resToken =
+      Platform.OS === 'web'
+        ? localStorage.getItem('fitnessLoginToken')
+        : await SecureStore.getItemAsync('fitnessLoginToken')
+    const token = resToken?.replace(/"/g, '')
+
+    try {
+      await updateUserPref(workoutPref, token)
+      setIsEdit(!isEdit)
+    } catch (error) {
+      setWorkoutPref(
+        data[0]?.preference?.map((item) => {
+          return item.name
+        })
+      )
+    }
+  }
+
   const checkPref = (item: string) => {
     let result = false
-    workoutPref.forEach((pref) => {
+    workoutPref?.forEach((pref) => {
       if (pref.toLowerCase() === item.toLowerCase()) result = true
     })
 
@@ -70,7 +94,7 @@ const MyProfileWorkPref = ({ data }: Props) => {
 
   const handleCancel = () => {
     setWorkoutPref(
-      data[0].preference.map((item) => {
+      data[0]?.preference?.map((item) => {
         return item.name
       })
     )
@@ -98,7 +122,7 @@ const MyProfileWorkPref = ({ data }: Props) => {
             Workout Preference
           </Text>
         </TouchableOpacity>
-        {isShow && !isEdit ? (
+        {isShow && !isEdit && (
           <TouchableOpacity onPress={() => setIsEdit(!isEdit)}>
             <FontAwesomeIcon
               icon={faEdit}
@@ -106,7 +130,8 @@ const MyProfileWorkPref = ({ data }: Props) => {
               size={RFPercentage(2)}
             />
           </TouchableOpacity>
-        ) : (
+        )}
+        {isShow && isEdit && (
           <View style={{ flexDirection: 'row', gap: RFPercentage(2) }}>
             <TouchableOpacity onPress={handleCancel}>
               <FontAwesomeIcon
@@ -115,7 +140,7 @@ const MyProfileWorkPref = ({ data }: Props) => {
                 size={RFPercentage(2)}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleUpdatePref}>
               <FontAwesomeIcon
                 icon={faCheck}
                 color="white"
@@ -129,7 +154,7 @@ const MyProfileWorkPref = ({ data }: Props) => {
         <View style={{ paddingLeft: RFPercentage(2.5) }}>
           {!isEdit ? (
             <View>
-              {workoutPref.map((item) => (
+              {workoutPref?.map((item) => (
                 <WorkoutPref
                   key={Math.random()}
                   title={item}
@@ -147,7 +172,7 @@ const MyProfileWorkPref = ({ data }: Props) => {
                 <WorkoutPref
                   key={Math.random()}
                   title={item}
-                  onPress={() => handleUpdatePref(item)}
+                  onPress={() => handleUpdateSelect(item)}
                   info={true}
                   style={{
                     container: checkPref(item)
