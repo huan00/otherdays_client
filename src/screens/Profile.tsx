@@ -21,9 +21,10 @@ import CustomBtn from '../components/CustomBtn'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import WorkoutHistory from '../components/WorkoutHistory'
 import { useAuth } from '../context/AppContext'
-import MyProfile from '../components/MyProfile'
-import MyProfileWorkPref from '../components/MyProfileWorkPref'
-import WorkoutGoal from '../components/WorkoutGoal'
+import MyProfile from '../components/profile/MyProfile'
+import MyProfileWorkPref from '../components/profile/MyProfileWorkPref'
+import WorkoutGoal from '../components/profile/WorkoutGoal'
+import MyEquipment from '../components/profile/MyEquipment'
 
 type Props = {
   navigation: NavigationProp<ParamListBase>
@@ -135,7 +136,8 @@ const Profile = ({ navigation }: Props) => {
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>
-              <Text
+              <MyEquipment />
+              {/* <Text
                 style={[STYLES.whiteText, styles.headerText]}
                 onPress={() => setIsEquipment(!isEquipment)}
               >
@@ -157,7 +159,7 @@ const Profile = ({ navigation }: Props) => {
                     />
                   ))
                 )}
-              </View>
+              </View> */}
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>

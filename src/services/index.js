@@ -51,6 +51,16 @@ export const updateUserWorkoutGoal = async (data, token) => {
     headers
   })
 }
+export const updateUserEquipment = async (data, token) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: 'token ' + token
+  }
+
+  return await axios.put(`${BASEURL}/fitness/updateuserequipment`, data, {
+    headers
+  })
+}
 
 export const getToken = async () => {
   const res =

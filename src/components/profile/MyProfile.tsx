@@ -13,13 +13,13 @@ import * as SecureStore from 'expo-secure-store'
 
 import React, { useRef, useState } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { STYLES } from '../util/styles'
-import { useAuth } from '../context/AppContext'
-import Label from './Label'
+import { STYLES } from '../../util/styles'
+import { useAuth } from '../../context/AppContext'
+import Label from '../Label'
 import { faCancel, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { UserType } from '../types'
-import { updateUser } from '../services'
+import { UserType } from '../../types'
+import { updateUser } from '../../services'
 
 type EditDataType = {
   first_name: string

@@ -1,5 +1,4 @@
 import {
-  FlatList,
   Platform,
   StyleSheet,
   Text,
@@ -10,13 +9,12 @@ import React, { useState } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCancel, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
-import Dropdown from './Dropdown'
-import { WORKOUT_PROGRAM } from '../constants/workoutProgram'
-import WorkoutPref from './WorkoutPref'
-import { OTHERDAY_LIME } from '../constants/colors'
-import { updateUserPref, verifyLogin } from '../services'
+import { WORKOUT_PROGRAM } from '../../constants/workoutProgram'
+import WorkoutPref from '../WorkoutPref'
+import { OTHERDAY_LIME } from '../../constants/colors'
+import { updateUserPref } from '../../services'
 import * as SecureStore from 'expo-secure-store'
-import { useAuth } from '../context/AppContext'
+import { useAuth } from '../../context/AppContext'
 
 type Props = {
   data: {

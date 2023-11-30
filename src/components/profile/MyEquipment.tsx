@@ -7,30 +7,29 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { STYLES } from '../util/styles'
-import { useAuth } from '../context/AppContext'
-import Label from './Label'
-import WorkoutPref from './WorkoutPref'
-import { OTHERDAY_LIME } from '../constants/colors'
+import { STYLES } from '../../util/styles'
+import { useAuth } from '../../context/AppContext'
+import WorkoutPref from '../WorkoutPref'
+import { OTHERDAY_LIME } from '../../constants/colors'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCancel, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
-import { WORKOUT_GOAL } from '../constants/workoutProgram'
-import { updateUserWorkoutGoal } from '../services'
+import { EQUIPMENTS } from '../../constants/workoutProgram'
+import { updateUserEquipment, updateUserWorkoutGoal } from '../../services'
 import * as SecureStore from 'expo-secure-store'
 
 const WorkoutGoal = () => {
   const { user } = useAuth()
   const [isShow, setIsShow] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [workoutGoals, setWorkoutGoals] = useState<string[] | undefined>(
-    user?.workoutGoals[0].goals.map((item) => {
-      return item.goal
+  const [equipmentsList, setEquipmentsList] = useState<string[] | undefined>(
+    user?.EquipmentsList[0].equipments.map((item) => {
+      return item.name
     })
   )
 
-  const checkGoalInList = (goal: string) => {
+  const checkInList = (goal: string) => {
     let result = false
-    workoutGoals?.forEach((item) => {
+    equipmentsList?.forEach((item) => {
       if (item.toLowerCase() === goal.toLowerCase()) {
         result = true
       }
@@ -39,16 +38,16 @@ const WorkoutGoal = () => {
   }
 
   const handleEditSelect = (item: string) => {
-    if (workoutGoals?.includes(item)) {
-      const index = workoutGoals.indexOf(item)
-      const tempWorkoutGoals = [...workoutGoals]
-      tempWorkoutGoals.splice(index, 1)
-      setWorkoutGoals(tempWorkoutGoals)
+    if (equipmentsList?.includes(item)) {
+      const index = equipmentsList.indexOf(item)
+      const tempequipmentsList = [...equipmentsList]
+      tempequipmentsList.splice(index, 1)
+      setEquipmentsList(tempequipmentsList)
     } else {
-      if (workoutGoals) {
-        const tempWorkoutGoals = [...workoutGoals]
-        tempWorkoutGoals.push(item)
-        setWorkoutGoals(tempWorkoutGoals)
+      if (equipmentsList) {
+        const tempequipmentsList = [...equipmentsList]
+        tempequipmentsList.push(item)
+        setEquipmentsList(tempequipmentsList)
       }
     }
   }
@@ -60,7 +59,7 @@ const WorkoutGoal = () => {
         : await SecureStore.getItemAsync('fitnessLoginToken')
     const token = resToken?.replace(/"/g, '')
 
-    await updateUserWorkoutGoal(workoutGoals, token)
+    await updateUserEquipment(equipmentsList, token)
 
     setIsEdit(!isEdit)
   }
@@ -79,7 +78,7 @@ const WorkoutGoal = () => {
             style={[STYLES.whiteText, styles.headerText]}
             onPress={() => setIsShow(!isShow)}
           >
-            Workout Goals
+            Equipments List
           </Text>
         </View>
         <View>
@@ -120,30 +119,30 @@ const WorkoutGoal = () => {
       >
         {isShow &&
           (!isEdit
-            ? workoutGoals?.map((item: string, index: number) => (
+            ? equipmentsList?.map((item: string, index: number) => (
                 <WorkoutPref
                   title={item}
                   onPress={() => {}}
                   key={Math.random()}
                   style={{
-                    container: checkGoalInList(item)
+                    container: checkInList(item)
                       ? { borderColor: OTHERDAY_LIME }
                       : undefined,
-                    circle: checkGoalInList(item)
+                    circle: checkInList(item)
                       ? { backgroundColor: OTHERDAY_LIME }
                       : undefined
                   }}
                 />
               ))
-            : WORKOUT_GOAL.map((item) => (
+            : EQUIPMENTS.map((item) => (
                 <WorkoutPref
                   title={item}
                   onPress={() => handleEditSelect(item)}
                   style={{
-                    container: checkGoalInList(item)
+                    container: checkInList(item)
                       ? { borderColor: OTHERDAY_LIME }
                       : undefined,
-                    circle: checkGoalInList(item)
+                    circle: checkInList(item)
                       ? { backgroundColor: OTHERDAY_LIME }
                       : undefined
                   }}
