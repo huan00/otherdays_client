@@ -17,9 +17,11 @@ import { OTHERDAY_LIME } from '../../constants/colors'
 import CustomBtn from '../../components/CustomBtn'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from 'NavType'
+
 import { BASEURL } from '../../services'
 import axios from 'axios'
+import { RootStackParamList } from '../../types/types'
+import { useAuth } from '../../context/AppContext'
 
 type OnboardSevenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -28,7 +30,7 @@ type OnboardSevenProps = NativeStackScreenProps<
 
 const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
   const [workoutGoal, setWorkoutGoal] = useState<string[]>([])
-  const [user, setUser] = useState<any>({})
+  const { user, setUser } = useAuth()
 
   const handleSelect = (goal: string) => {
     const currentList = new Set(workoutGoal)
@@ -63,11 +65,11 @@ const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
       }
     }
 
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'multipart/form-data' },
-      body: formData
-    }
+    // const options = {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'multipart/form-data' },
+    //   body: formData
+    // }
 
     const res = await axios
       .post(`${BASEURL}/fitness/register`, formData)

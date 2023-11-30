@@ -84,7 +84,9 @@ const WorkoutDisplay = ({
               tracker[index] === item.set ? { color: OTHERDAY_LIME } : {}
             ]}
           >
-            {completed ? item.set : tracker[index]}
+            {item.set
+              ? `${completed ? item.set : tracker[index]} / ${item.set}`
+              : ``}
           </Text>
         </View>
       </TouchableOpacity>

@@ -5,10 +5,9 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native'
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 import React from 'react'
-import { TEXT_COLOR_WHITE, OTHERDAY_LIME } from '../constants/colors'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { OTHERDAY_LIME } from '../constants/colors'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height

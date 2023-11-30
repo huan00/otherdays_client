@@ -22,10 +22,11 @@ import {
   faCameraRotate
 } from '@fortawesome/free-solid-svg-icons'
 import { Camera, CameraType } from 'expo-camera'
-import { RootStackParamList } from 'NavType'
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import OnboardHeading from '../../components/OnboardHeading'
 import { SIGNUP_STEPS } from '../../constants/workoutProgram'
+import { RootStackParamList } from '../../types/types'
 
 type OnboardFourProps = NativeStackScreenProps<
   RootStackParamList,
@@ -82,7 +83,6 @@ const OnboardFour = ({ navigation, route }: OnboardFourProps) => {
   const handleNextPress = () => {
     if (!image) return
     const userInfo = route.params
-    console.log(image)
     const data = { ...userInfo, profile_image: image }
 
     navigation.navigate('OnboardFive', data)

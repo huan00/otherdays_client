@@ -12,7 +12,7 @@ import CustomBtn from '../../components/CustomBtn'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { NativeStackScreenProps } from '@react-navigation/native-stack/lib/typescript/src/types'
-import { RootStackParamList } from 'NavType'
+import { RootStackParamList } from '../../types/types'
 
 type OnboardSixProps = NativeStackScreenProps<RootStackParamList, 'OnboardSix'>
 

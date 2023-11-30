@@ -31,6 +31,14 @@ export const WORKOUT_GOAL = [
   'Reduce stree'
 ]
 
+export const WORKOUT_GOAL_PROMPT = [
+  { label: 'Lost weight', value: 'Lost weight' },
+  { label: 'Build muscle', value: 'Build muscle' },
+  { label: 'Improve health', value: 'Improve health' },
+  { label: 'Improve flexibility', value: 'Improve flexibility' },
+  { label: 'Reduce stree', value: 'Reduce stree' }
+]
+
 export const WORKOUT_LEVEL = [
   { label: 'beginner', value: 'Beginner' },
   { label: 'intermediate', value: 'Intermediate' },
@@ -64,8 +72,8 @@ export const WORKOUT_TIME = [
 ]
 
 export const WORKOUT_EQUIPMENTS = [
-  { label: 'my equipments', value: 'my equipments' },
-  { label: 'gym equipments', value: 'Gym Equipments' }
+  { label: 'gym equipments', value: 'Gym Equipments' },
+  { label: 'my equipments', value: 'my equipments' }
   // { label: 'dumbbells', value: 'Dumbbells' },
   // { label: 'barbells', value: 'Barbells' },
   // { label: 'weight bench', value: 'weight bench' },

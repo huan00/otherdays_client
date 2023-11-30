@@ -1,62 +1,59 @@
 import {
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   TextInput,
+  Text,
   TextInputChangeEventData,
-  TouchableOpacity,
-  View
+  View,
+  KeyboardTypeOptions
 } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 type label = {
   value: string
   label: string
+  edit?: boolean
+  editRef?: React.MutableRefObject<TextInput | null>
+  inputType?: KeyboardTypeOptions
   onChange: (
     label: string,
+    // event: string
     event: NativeSyntheticEvent<TextInputChangeEventData>
   ) => void
 }
 
-const Label = ({ value, label, onChange }: label) => {
-  const [edit, setEdit] = useState<boolean>(false)
-  const refInput = useRef<TextInput>(null)
-
-  const handleEdit = () => {
-    setEdit(!edit)
-
-    if (edit) refInput.current?.focus()
-  }
+const Label = ({
+  value,
+  label,
+  onChange,
+  edit = false,
+  editRef,
+  inputType
+}: label) => {
+  useEffect(() => {
+    if (edit && label === 'first_name') {
+      editRef?.current?.focus()
+    }
+  }, [edit])
 
   return (
     <View style={styles.container}>
+      <Text style={{ color: 'white', fontSize: RFPercentage(1.8) }}>
+        {label.length > 0
+          ? `${label.toLocaleUpperCase().replace('_', ' ')}: `
+          : ''}
+      </Text>
       <TextInput
-        ref={refInput}
-        defaultValue={value}
+        ref={editRef}
+        value={value}
+        keyboardType={inputType}
         onChange={(event) => onChange(label, event)}
         placeholderTextColor={'white'}
-        style={styles.textInput}
+        style={[styles.textInput, !edit && { color: 'gray' }]}
         editable={edit}
-        selection={{ start: 1, end: 5 }}
+        selectTextOnFocus={true}
       />
-      {/* <TouchableOpacity style={styles.editWrapper} onPress={handleEdit}>
-        {edit ? (
-          <FontAwesomeIcon
-            icon={faCheck}
-            color="white"
-            size={RFPercentage(2.5)}
-          />
-        ) : (
-          <FontAwesomeIcon
-            icon={faEdit}
-            color="white"
-            size={RFPercentage(2.5)}
-          />
-        )}
-      </TouchableOpacity> */}
     </View>
   )
 }
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
     marginVertical: RFPercentage(2),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'flex-end'
   },
   textInput: {
     flex: 1,

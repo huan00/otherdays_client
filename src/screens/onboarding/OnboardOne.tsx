@@ -7,14 +7,20 @@ import {
   OTHERDAY_LIME,
   TEXT_COLOR_WHITE
 } from '../../constants/colors'
-import { RootStackParamList } from 'NavType'
+
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import {
+  NavigationProp,
+  ParamListBase,
+  RouteProp
+} from '@react-navigation/native'
+import { RootStackParamList } from '../../types/types'
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
 
 type OnboardProps = NativeStackScreenProps<RootStackParamList, 'OnboardOne'>
 
-const OnboardOne = ({ navigation }: OnboardProps) => {
+const OnboardOne = ({ navigation, route }: OnboardProps) => {
   const handleNext = () => {
     navigation.navigate('OnboardTwo')
   }

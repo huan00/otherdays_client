@@ -24,6 +24,7 @@ import CustomBtn from '../components/CustomBtn'
 import axios from 'axios'
 import { BASEURL, verifyLogin } from '../services'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
+import { useAuth } from '../context/AppContext'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -33,6 +34,7 @@ type LoginProps = {
 }
 
 const Login = ({ navigation }: LoginProps) => {
+  const { setUser } = useAuth()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
@@ -45,13 +47,9 @@ const Login = ({ navigation }: LoginProps) => {
     if (!email || !password) return
 
     try {
-      //  const headers:{
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'application/json'
-      //   }
-
       const response = await axios.post(`${BASEURL}/fitness/login`, authData)
       const data = response.data
+      setUser(data.user)
       if (Platform.OS === 'web') {
         localStorage.setItem('fitnessUser', JSON.stringify(data.user))
         localStorage.setItem('fitnessLoginToken', JSON.stringify(data.token))
