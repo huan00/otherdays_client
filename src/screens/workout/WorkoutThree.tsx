@@ -59,7 +59,7 @@ const WorkoutThree = ({ navigation, route }: Props) => {
       Authorization: `token ` + token?.replace(/"/g, '')
     }
 
-    const res = axios.post(
+    const res = await axios.post(
       `${BASEURL}/fitness/saveworkout`,
       JSON.stringify(workout_data),
       {

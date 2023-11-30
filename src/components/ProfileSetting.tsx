@@ -6,7 +6,6 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 type Props = {
   title: string
   data: any
-  // dataType: type
 }
 
 const ProfileSetting = ({ title, data }: Props) => {

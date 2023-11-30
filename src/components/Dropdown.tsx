@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { RFPercentage } from 'react-native-responsive-fontsize'

@@ -14,7 +14,7 @@ import { OTHERDAY_LIME } from '../../constants/colors'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCancel, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { EQUIPMENTS } from '../../constants/workoutProgram'
-import { updateUserEquipment, updateUserWorkoutGoal } from '../../services'
+import { updateUserEquipment } from '../../services'
 import * as SecureStore from 'expo-secure-store'
 
 const WorkoutGoal = () => {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { ExerciseType, WorkoutType } from '../types'
 import { RFPercentage } from 'react-native-responsive-fontsize'

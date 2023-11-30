@@ -1,5 +1,4 @@
 import {
-  Button,
   Dimensions,
   Image,
   SafeAreaView,
@@ -9,7 +8,7 @@ import {
   View
 } from 'react-native'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import StatusLines from '../../components/StatusLines'
 import { BACKGROUND_COLOR, TEXT_COLOR_WHITE } from '../../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
@@ -32,15 +31,6 @@ type OnboardFourProps = NativeStackScreenProps<
   RootStackParamList,
   'OnboardFour'
 >
-
-type userData = {
-  first_name: string
-  last_name: string
-  sex: string
-  weight: number
-  height: { feet: number; inches: number }
-  profile_image: string
-}
 
 const OnboardFour = ({ navigation, route }: OnboardFourProps) => {
   const [image, setImage] = useState<string>()

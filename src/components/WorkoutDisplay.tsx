@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { STYLES } from '../util/styles'
 import { RFPercentage } from 'react-native-responsive-fontsize'

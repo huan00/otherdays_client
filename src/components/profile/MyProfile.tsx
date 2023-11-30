@@ -35,7 +35,7 @@ type ErrorType = {
 }
 
 const MyProfile = () => {
-  const { user, setUser } = useAuth()
+  const { user } = useAuth()
   const [isUserProfile, setIsUserProfile] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [editAbleUserData, setEditAbleUserData] = useState<
@@ -45,11 +45,8 @@ const MyProfile = () => {
 
   const handleOnChange = (
     label: string,
-    // text: string
     event: NativeSyntheticEvent<TextInputChangeEventData>
   ): void => {
-    // const updateUser: any = { ...user, [label]: event.nativeEvent.text }
-    // setUser(updateUser)
     if (editAbleUserData) {
       if (
         label.toUpperCase() === 'feet'.toUpperCase() ||

@@ -23,9 +23,7 @@ import { WorkoutTwoScreen } from '../../types/types'
 
 type Props = {
   navigation: NavigationProp<ParamListBase>
-  // route: RouteProp<{ params: WorkoutTwoScreen }, 'params'>
   route: RouteProp<{ WorkoutTwo: WorkoutTwoScreen }, 'WorkoutTwo'>
-  // }
 }
 const HEIGHT = Dimensions.get('window').height
 
@@ -93,14 +91,6 @@ const WorkoutTwo = ({ navigation, route }: Props) => {
           </ImageBackground>
         </View>
         <View style={styles.bottomContent}>
-          {/* <View style={styles.bottomHeader}>
-            <Text style={STYLES.grayText}>Strenght Training</Text>
-            <Text style={STYLES.grayText}>
-              Helps to build muscle strength and endurance. Improve your
-              posture, reduce your risk of injuries, and make it easier to
-              perform everyday tasks.
-            </Text>
-          </View> */}
           <View style={styles.exerciseWrapper}>
             <Text style={STYLES.grayText}>
               Warm up- {workout.warmup[0].set} set

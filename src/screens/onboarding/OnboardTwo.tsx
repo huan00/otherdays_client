@@ -1,7 +1,6 @@
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   View,
   Keyboard,
   Platform,
@@ -10,11 +9,7 @@ import {
 import { Divider } from 'react-native-elements'
 import React, { useState } from 'react'
 import StatusLines from '../../components/StatusLines'
-import {
-  BACKGROUND_COLOR,
-  ERROR_COLOR,
-  TEXT_COLOR_WHITE
-} from '../../constants/colors'
+import { BACKGROUND_COLOR, ERROR_COLOR } from '../../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import CustomInput from '../../components/CustomInput'
 import CustomBtn from '../../components/CustomBtn'

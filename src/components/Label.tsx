@@ -18,7 +18,6 @@ type label = {
   inputType?: KeyboardTypeOptions
   onChange: (
     label: string,
-    // event: string
     event: NativeSyntheticEvent<TextInputChangeEventData>
   ) => void
 }

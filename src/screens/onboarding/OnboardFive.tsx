@@ -1,10 +1,8 @@
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   View,
   Keyboard,
-  Image,
   Platform,
   FlatList
 } from 'react-native'

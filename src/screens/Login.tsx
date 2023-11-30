@@ -1,7 +1,6 @@
 import {
   SafeAreaView,
   Dimensions,
-  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -9,7 +8,7 @@ import {
   Platform
 } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import StatusLines from '../components/StatusLines'
 import {
   BACKGROUND_COLOR,
@@ -22,7 +21,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { P_HORIZONTAL } from '../constants/styles'
 import CustomBtn from '../components/CustomBtn'
 import axios from 'axios'
-import { BASEURL, verifyLogin } from '../services'
+import { BASEURL } from '../services'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import { useAuth } from '../context/AppContext'
 

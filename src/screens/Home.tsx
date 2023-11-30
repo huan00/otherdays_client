@@ -19,8 +19,7 @@ import CustomBtn from '../components/CustomBtn'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import * as SecureStore from 'expo-secure-store'
 import { verifyLogin } from '../services'
-import { UserType } from '../types'
-import { AppContext, UserContextType, useAuth } from '../context/AppContext'
+import { useAuth } from '../context/AppContext'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -63,8 +62,6 @@ const Home = ({ navigation }: HomeProps) => {
   const handleRegister = () => {
     navigation.navigate('OnboardOne')
   }
-
-  console.log(user)
 
   return (
     <SafeAreaView>

@@ -3,7 +3,6 @@ import {
   Platform,
   SafeAreaView,
   StyleSheet,
-  Text,
   View
 } from 'react-native'
 import React, { useState } from 'react'
@@ -30,7 +29,7 @@ type OnboardSevenProps = NativeStackScreenProps<
 
 const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
   const [workoutGoal, setWorkoutGoal] = useState<string[]>([])
-  const { user, setUser } = useAuth()
+  const { setUser } = useAuth()
 
   const handleSelect = (goal: string) => {
     const currentList = new Set(workoutGoal)
@@ -64,12 +63,6 @@ const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
         formData.append(key, value)
       }
     }
-
-    // const options = {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    //   body: formData
-    // }
 
     const res = await axios
       .post(`${BASEURL}/fitness/register`, formData)

@@ -4,19 +4,16 @@ import {
   Text,
   View,
   Image,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
   ScrollView,
   Platform,
   Dimensions
 } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { STYLES } from '../util/styles'
 import * as SecureStore from 'expo-secure-store'
 import { BASEURL, verifyLogin } from '../services'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { Divider } from 'react-native-elements'
-import Label from '../components/Label'
 import CustomBtn from '../components/CustomBtn'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import WorkoutHistory from '../components/WorkoutHistory'
@@ -30,51 +27,9 @@ type Props = {
   navigation: NavigationProp<ParamListBase>
 }
 
-type UserSettingType = {
-  id: number
-  email: string
-  first_name: string
-  last_name: string
-  age: number
-  gender: string
-  weight: number
-  profile_image: null
-  height: { feet: number; inches: number }
-}
-
 const Profile = ({ navigation }: Props) => {
   const { user, setUser } = useAuth()
-  const [userSetting, setUserSetting] = useState<UserSettingType | undefined>()
-  const [isUserProfile, setIsUserProfile] = useState<boolean>(false)
-  const [isWorkoutPref, setIsWorkoutPref] = useState<boolean>(false)
-  const [isWorkoutGoal, setIsWorkoutGoal] = useState<boolean>(false)
-  const [isEquipment, setIsEquipment] = useState<boolean>(false)
   const [isWorkoutHistory, setIsWorkoutHistory] = useState<boolean>(false)
-
-  useEffect(() => {
-    if (user) {
-      setUserSetting({
-        id: user.id,
-        email: user.email,
-        first_name: user?.first_name,
-        last_name: user?.last_name,
-        age: user.age,
-        gender: user.gender,
-        weight: user?.weight,
-        profile_image: user?.profile_image,
-        height: user?.height
-      })
-    }
-  }, [user])
-
-  const handleUpdate = (
-    label: string,
-    event: NativeSyntheticEvent<TextInputChangeEventData>
-  ) => {
-    const updateUser: any = { ...user, [label]: event.nativeEvent.text }
-
-    setUser(updateUser)
-  }
 
   const handleHomePress = () => {
     const getToken = async () => {
@@ -92,8 +47,6 @@ const Profile = ({ navigation }: Props) => {
     getToken()
     navigation.navigate('Workout')
   }
-
-  console.log(user)
 
   return (
     <SafeAreaView style={STYLES.container}>
@@ -137,29 +90,6 @@ const Profile = ({ navigation }: Props) => {
 
             <View style={{ marginTop: RFPercentage(3) }}>
               <MyEquipment />
-              {/* <Text
-                style={[STYLES.whiteText, styles.headerText]}
-                onPress={() => setIsEquipment(!isEquipment)}
-              >
-                Equipments List
-              </Text>
-              <View
-                style={{
-                  display: isEquipment ? 'flex' : 'none',
-                  paddingLeft: RFPercentage(3)
-                }}
-              >
-                {user.EquipmentsList.map((equipments: any) =>
-                  equipments.equipments.map((equipment: any, index: number) => (
-                    <Label
-                      key={index + Math.random()}
-                      value={equipment.name}
-                      label={equipment.name}
-                      onChange={() => {}}
-                    />
-                  ))
-                )}
-              </View> */}
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>
@@ -242,7 +172,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1,
     borderColor: 'white',
     borderWidth: 1,
-    // borderStyle: 'solid',
     borderRadius: RFPercentage(50)
   },
   btnLayout: {

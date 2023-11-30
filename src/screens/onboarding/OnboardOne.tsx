@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Dimensions } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import React, { useState } from 'react'
+import React from 'react'
 import CustomBtn from '../../components/CustomBtn'
 import {
   BACKGROUND_COLOR,
@@ -9,11 +9,6 @@ import {
 } from '../../constants/colors'
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import {
-  NavigationProp,
-  ParamListBase,
-  RouteProp
-} from '@react-navigation/native'
 import { RootStackParamList } from '../../types/types'
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height

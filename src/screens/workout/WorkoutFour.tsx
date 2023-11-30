@@ -25,8 +25,6 @@ const WorkoutFour = ({ navigation, route }: Props) => {
   const getDateFormat = (workoutDate: string): string => {
     const date = new Date()
     const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' })
-    // const day = date.getDate()
-    // const month = date.toLocaleDateString('en-US', { month: 'long' })
 
     return dayOfWeek
   }
@@ -44,10 +42,6 @@ const WorkoutFour = ({ navigation, route }: Props) => {
           <Text style={styles.resultText}>Time</Text>
           <Text style={styles.resultText}>{route.params.time}</Text>
         </View>
-        {/* <View style={styles.calories}>
-          <Text style={styles.resultText}>Calories</Text>
-          <Text style={styles.resultText}>340</Text>
-        </View> */}
       </View>
 
       <View>
@@ -77,7 +71,6 @@ const WorkoutFour = ({ navigation, route }: Props) => {
           <Text
             style={[
               {
-                // backgroundColor: OTHERDAY_LIME,
                 color: 'white',
                 fontSize: RFPercentage(2.3)
               }
@@ -88,20 +81,12 @@ const WorkoutFour = ({ navigation, route }: Props) => {
           <Text
             style={[
               {
-                // backgroundColor: OTHERDAY_LIME,
                 color: '#000',
                 fontSize: RFPercentage(2.3)
               }
             ]}
-          >
-            {/* Strength Training Helps to build muscle strength and endurance.
-            Improve your posture, reduce your risk of injuries, and make it
-            easier to perform everyday tasks. */}
-          </Text>
+          ></Text>
         </View>
-        {/* <View style={styles.btnWrapper}> */}
-
-        {/* </View> */}
       </View>
       <CustomBtn
         title="Home"
@@ -120,7 +105,6 @@ const styles = StyleSheet.create({
   backBtn: {
     justifyContent: 'center',
     alignItems: 'center',
-    // position: 'absolute',
     left: RFPercentage(2),
     width: RFPercentage(4),
     aspectRatio: 1 / 1,

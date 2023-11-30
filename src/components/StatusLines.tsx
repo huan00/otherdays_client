@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import React from 'react'
 import { INACTIVE_COLOR, STATUSLINE_COLOR } from '../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'

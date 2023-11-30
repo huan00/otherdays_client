@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { TEXT_COLOR_WHITE } from '../constants/colors'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { Divider } from 'react-native-elements'
 
 type props = {
   title: string
