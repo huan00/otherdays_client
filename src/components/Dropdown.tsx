@@ -19,7 +19,6 @@ const Dropdown = ({ data, setData, title, formData }: Props) => {
   const [value, setValue] = useState(null)
   const [items, setItems] = useState([...data])
 
-  // console.log(items)
   return (
     <DropDownPicker
       placeholder={items[0].value}

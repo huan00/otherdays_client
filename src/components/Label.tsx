@@ -40,7 +40,9 @@ const Label = ({
   return (
     <View style={styles.container}>
       <Text style={{ color: 'white', fontSize: RFPercentage(1.8) }}>
-        {label.toLocaleUpperCase().replace('_', ' ')}:{' '}
+        {label.length > 0
+          ? `${label.toLocaleUpperCase().replace('_', ' ')}: `
+          : ''}
       </Text>
       <TextInput
         ref={editRef}

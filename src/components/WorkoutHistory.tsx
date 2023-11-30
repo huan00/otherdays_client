@@ -10,7 +10,6 @@ type Props = {
 
 const WorkoutHistory = ({ data }: Props) => {
   const [isPressed, setIsPress] = useState<number[]>([])
-  // console.log(data)
 
   const filterExerciseType = (exercise_data: ExerciseType[], type: string) => {
     const result = exercise_data.filter((exercise) => {

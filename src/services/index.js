@@ -17,15 +17,6 @@ export const verifyLogin = async (token) => {
     {},
     { headers }
   )
-  // const headers = {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     Authorization: 'token ' + token
-  //   }
-  // }
-  // const res = await fetch(`${BASEURL}/fitness/verifylogin`, { headers })
-
   return res.data
 }
 
@@ -47,6 +38,16 @@ export const updateUserPref = async (data, token) => {
   }
 
   return await axios.put(`${BASEURL}/fitness/updateuserpref`, data, {
+    headers
+  })
+}
+export const updateUserWorkoutGoal = async (data, token) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: 'token ' + token
+  }
+
+  return await axios.put(`${BASEURL}/fitness/updateuserworkoutgoal`, data, {
     headers
   })
 }

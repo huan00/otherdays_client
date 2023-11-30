@@ -64,7 +64,6 @@ const Workout = ({ navigation, route }: Props) => {
       }
     }
     getToken()
-    console.log('hello')
   }, [])
 
   const handlePress = async () => {
@@ -81,7 +80,6 @@ const Workout = ({ navigation, route }: Props) => {
     const res = await axios.post(`${BASEURL}/fitness/getworkout`, formData, {
       headers
     })
-    console.log(res)
 
     setLoader(false)
 

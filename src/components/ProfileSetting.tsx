@@ -13,10 +13,6 @@ const ProfileSetting = ({ title, data }: Props) => {
   const [isActive, setIsActive] = useState(false)
 
   const keys = Object.keys(data)
-
-  // console.log(keys[0])
-  // console.log(data)
-
   const handleUpdate = () => {}
   return (
     <TouchableOpacity>

@@ -23,6 +23,7 @@ import WorkoutHistory from '../components/WorkoutHistory'
 import { useAuth } from '../context/AppContext'
 import MyProfile from '../components/MyProfile'
 import MyProfileWorkPref from '../components/MyProfileWorkPref'
+import WorkoutGoal from '../components/WorkoutGoal'
 
 type Props = {
   navigation: NavigationProp<ParamListBase>
@@ -49,21 +50,6 @@ const Profile = ({ navigation }: Props) => {
   const [isEquipment, setIsEquipment] = useState<boolean>(false)
   const [isWorkoutHistory, setIsWorkoutHistory] = useState<boolean>(false)
 
-  // useEffect(() => {
-  //   const getToken = async () => {
-  //     let res =
-  //       Platform.OS === 'web'
-  //         ? localStorage.getItem('fitnessLoginToken')
-  //         : await SecureStore.getItemAsync('fitnessLoginToken')
-  //     let temp = res?.replaceAll(/"/g, '')
-  //     if (temp) {
-  //       const response = await verifyLogin(temp)
-  //       setUser(JSON.parse(response))
-  //     }
-  //   }
-  //   getToken()
-  // }, [])
-
   useEffect(() => {
     if (user) {
       setUserSetting({
@@ -89,8 +75,6 @@ const Profile = ({ navigation }: Props) => {
     setUser(updateUser)
   }
 
-  console.log(user?.workoutPreference)
-
   const handleHomePress = () => {
     const getToken = async () => {
       const res =
@@ -107,6 +91,8 @@ const Profile = ({ navigation }: Props) => {
     getToken()
     navigation.navigate('Workout')
   }
+
+  console.log(user)
 
   return (
     <SafeAreaView style={STYLES.container}>
@@ -142,57 +128,10 @@ const Profile = ({ navigation }: Props) => {
 
             <View style={{ marginTop: RFPercentage(3) }}>
               <MyProfileWorkPref data={user.workoutPreference} />
-              {/* <Text
-                style={[STYLES.whiteText, styles.headerText]}
-                onPress={() => {
-                  setIsWorkoutPref(!isWorkoutPref)
-                }}
-              >
-                Workout Prefreference
-              </Text>
-              <View
-                style={{
-                  display: isWorkoutPref ? 'flex' : 'none',
-                  paddingLeft: RFPercentage(3)
-                }}
-              >
-                {user.workoutPreference.map((preference: any) =>
-                  preference.preference.map((workout: any, index: number) => (
-                    <Label
-                      key={index + Math.random()}
-                      value={workout.name}
-                      label={workout.name}
-                      onChange={() => {}}
-                    />
-                  ))
-                )}
-              </View> */}
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>
-              <Text
-                style={[STYLES.whiteText, styles.headerText]}
-                onPress={() => setIsWorkoutGoal(!isWorkoutGoal)}
-              >
-                Workout Goals
-              </Text>
-              <View
-                style={{
-                  display: isWorkoutGoal ? 'flex' : 'none',
-                  paddingLeft: RFPercentage(3)
-                }}
-              >
-                {user.workoutGoals.map((workoutGoal: any) =>
-                  workoutGoal.goals.map((goal: any, index: number) => (
-                    <Label
-                      value={goal.goal}
-                      label={goal.goal}
-                      onChange={() => {}}
-                      key={index + Math.random()}
-                    />
-                  ))
-                )}
-              </View>
+              <WorkoutGoal />
             </View>
 
             <View style={{ marginTop: RFPercentage(3) }}>

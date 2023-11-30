@@ -53,7 +53,6 @@ const MyProfileWorkPref = ({ data }: Props) => {
   const handleUpdateSelect = (item: string) => {
     if (workoutPref?.includes(item)) {
       const index = workoutPref.indexOf(item)
-      console.log(index)
       const tempPref = workoutPref ? [...workoutPref] : []
       tempPref.splice(index, 1)
       setWorkoutPref(tempPref)
@@ -102,14 +101,7 @@ const MyProfileWorkPref = ({ data }: Props) => {
   }
 
   return (
-    <View
-      style={
-        {
-          // display: isWorkoutPref ? 'flex' : 'none',
-          // paddingLeft: RFPercentage(3)
-        }
-      }
-    >
+    <View style={{}}>
       <View
         style={{
           flexDirection: 'row',
@@ -184,24 +176,6 @@ const MyProfileWorkPref = ({ data }: Props) => {
                   }}
                 />
               ))}
-              {/* <FlatList
-                data={getWorkoutProgram(WORKOUT_PROGRAM)}
-                renderItem={({ item }) => (
-                  <WorkoutPref
-                    title={item}
-                    onPress={() => {}}
-                    info={true}
-                    style={{
-                      container: workoutPref.includes(item)
-                        ? { borderColor: OTHERDAY_LIME }
-                        : undefined,
-                      circle: workoutPref.includes(item)
-                        ? { backgroundColor: OTHERDAY_LIME }
-                        : undefined
-                    }}
-                  />
-                )}
-              /> */}
             </View>
           )}
         </View>

@@ -53,7 +53,6 @@ const Home = ({ navigation }: HomeProps) => {
   }, [user])
 
   const handleBtnPress = () => {
-    // console.log(user)
     if (user) {
       navigation.navigate('Workout')
     } else {
@@ -64,6 +63,8 @@ const Home = ({ navigation }: HomeProps) => {
   const handleRegister = () => {
     navigation.navigate('OnboardOne')
   }
+
+  console.log(user)
 
   return (
     <SafeAreaView>

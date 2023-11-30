@@ -31,8 +31,6 @@ const WorkoutFour = ({ navigation, route }: Props) => {
     return dayOfWeek
   }
 
-  // console.log(route.params)
-
   return (
     <SafeAreaView style={STYLES.container}>
       <View style={styles.backBtn}>
