@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: RFPercentage(3),
     // height: Dimensions.get('window').height * 0.3,
-    width: Dimensions.get('window').width
+    width: Platform.OS === 'web' ? '400px' : Dimensions.get('window').width
   },
   userHeader: {
     marginTop: RFPercentage(3),
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     marginTop: RFPercentage(2)
   },
   profileImage: {
-    width: '100%',
+    width: Platform.OS === 'web' ? '200px' : '100%',
     aspectRatio: 1 / 1,
     borderColor: 'white',
     borderWidth: 1,
