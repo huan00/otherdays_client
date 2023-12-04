@@ -49,7 +49,7 @@ const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
 
     for (const [key, value] of Object.entries(data)) {
       if (key === 'height') {
-        formData.append(key, JSON.stringify(value))
+        formData.append(key, value)
       } else if (key === 'profile_image') {
         if (Platform.OS === 'web') {
         } else {
