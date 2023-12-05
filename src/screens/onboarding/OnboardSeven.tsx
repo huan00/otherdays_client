@@ -43,13 +43,15 @@ const OnboardSeven = ({ route, navigation }: OnboardSevenProps) => {
     setWorkoutGoal([...currentList])
   }
 
+  console.log(route.params)
+
   const handleNextPress = async () => {
     const data = { ...route.params, workout_goal: workoutGoal }
     const formData: any = new FormData()
 
     for (const [key, value] of Object.entries(data)) {
       if (key === 'height') {
-        formData.append(key, value)
+        formData.append(key, JSON.stringify(value))
       } else if (key === 'profile_image') {
         if (Platform.OS === 'web') {
         } else {
